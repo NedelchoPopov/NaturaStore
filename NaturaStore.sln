@@ -1,0 +1,98 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web", "NaturaStore\NaturaStore.Web.csproj", "{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B6897A6A-1B35-4EAD-AF31-2F63C3964CA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{26CBACBB-03BB-44C3-941A-7E54BFF1A0CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{43EAA658-9CB5-4A43-AB11-C2DEA8406D51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Data", "NaturaStore.Data\NaturaStore.Data.csproj", "{E8F52052-F6B1-4E29-8333-1B090FBC14F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Data.Common", "NaturaStore.Data.Common\NaturaStore.Data.Common.csproj", "{4F5EF02A-0D2E-414F-9301-8646264B71CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Data.Models", "NaturaStore.Data.Models\NaturaStore.Data.Models.csproj", "{71C54A74-BD09-4E81-B1C7-F75C3950B017}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.GCommon", "NaturaStore.GCommon\NaturaStore.GCommon.csproj", "{D85A36CF-363E-47D4-929B-394E1A1C5E0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Services.AutoMapping", "NaturaStore.Services.AutoMapping\NaturaStore.Services.AutoMapping.csproj", "{9B8762B3-5807-4C72-A847-34362E833E58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Services.Common", "NaturaStore.Services.Common\NaturaStore.Services.Common.csproj", "{924F50A9-1E3B-4715-BBC8-768A9229E7CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Services.Core", "NaturaStore.Services.Core\NaturaStore.Services.Core.csproj", "{EF909577-1CD3-4357-8434-E805F61431AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web.Infrastructure", "NaturaStore.Web.Infrastructure\NaturaStore.Web.Infrastructure.csproj", "{A95AABE3-6F77-4009-9841-F142D28DCF9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web.ViewModels", "NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj", "{22D7999A-3E1F-48EA-9665-0A7B64ED7959}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F52052-F6B1-4E29-8333-1B090FBC14F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F52052-F6B1-4E29-8333-1B090FBC14F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F52052-F6B1-4E29-8333-1B090FBC14F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F52052-F6B1-4E29-8333-1B090FBC14F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5EF02A-0D2E-414F-9301-8646264B71CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5EF02A-0D2E-414F-9301-8646264B71CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5EF02A-0D2E-414F-9301-8646264B71CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5EF02A-0D2E-414F-9301-8646264B71CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71C54A74-BD09-4E81-B1C7-F75C3950B017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71C54A74-BD09-4E81-B1C7-F75C3950B017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71C54A74-BD09-4E81-B1C7-F75C3950B017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71C54A74-BD09-4E81-B1C7-F75C3950B017}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D85A36CF-363E-47D4-929B-394E1A1C5E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D85A36CF-363E-47D4-929B-394E1A1C5E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D85A36CF-363E-47D4-929B-394E1A1C5E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D85A36CF-363E-47D4-929B-394E1A1C5E0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B8762B3-5807-4C72-A847-34362E833E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B8762B3-5807-4C72-A847-34362E833E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B8762B3-5807-4C72-A847-34362E833E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B8762B3-5807-4C72-A847-34362E833E58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{924F50A9-1E3B-4715-BBC8-768A9229E7CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{924F50A9-1E3B-4715-BBC8-768A9229E7CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{924F50A9-1E3B-4715-BBC8-768A9229E7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{924F50A9-1E3B-4715-BBC8-768A9229E7CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF909577-1CD3-4357-8434-E805F61431AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF909577-1CD3-4357-8434-E805F61431AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF909577-1CD3-4357-8434-E805F61431AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF909577-1CD3-4357-8434-E805F61431AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95AABE3-6F77-4009-9841-F142D28DCF9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95AABE3-6F77-4009-9841-F142D28DCF9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95AABE3-6F77-4009-9841-F142D28DCF9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95AABE3-6F77-4009-9841-F142D28DCF9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04} = {C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}
+		{E8F52052-F6B1-4E29-8333-1B090FBC14F3} = {B6897A6A-1B35-4EAD-AF31-2F63C3964CA6}
+		{4F5EF02A-0D2E-414F-9301-8646264B71CF} = {B6897A6A-1B35-4EAD-AF31-2F63C3964CA6}
+		{71C54A74-BD09-4E81-B1C7-F75C3950B017} = {B6897A6A-1B35-4EAD-AF31-2F63C3964CA6}
+		{9B8762B3-5807-4C72-A847-34362E833E58} = {26CBACBB-03BB-44C3-941A-7E54BFF1A0CF}
+		{924F50A9-1E3B-4715-BBC8-768A9229E7CB} = {26CBACBB-03BB-44C3-941A-7E54BFF1A0CF}
+		{EF909577-1CD3-4357-8434-E805F61431AB} = {26CBACBB-03BB-44C3-941A-7E54BFF1A0CF}
+		{A95AABE3-6F77-4009-9841-F142D28DCF9A} = {C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}
+		{22D7999A-3E1F-48EA-9665-0A7B64ED7959} = {C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A0F36C3-7307-4A08-A3B1-6FF4412D8020}
+	EndGlobalSection
+EndGlobal

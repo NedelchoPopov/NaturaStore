@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NaturaStore.Data.Models\NaturaStore.Data.Models.csproj" />
+    <ProjectReference Include="..\NaturaStore.Data\NaturaStore.Data.csproj" />
+    <ProjectReference Include="..\NaturaStore.GCommon\NaturaStore.GCommon.csproj" />
+    <ProjectReference Include="..\NaturaStore.Services.Common\NaturaStore.Services.Common.csproj" />
+    <ProjectReference Include="..\NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
