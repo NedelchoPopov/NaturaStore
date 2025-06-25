@@ -9,5 +9,6 @@ namespace NaturaStore.Data
             : base(options)
         {
         }
+
     }
 }
