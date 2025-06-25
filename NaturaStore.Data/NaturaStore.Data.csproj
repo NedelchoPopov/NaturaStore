@@ -22,4 +22,9 @@
     <ProjectReference Include="..\NaturaStore.GCommon\NaturaStore.GCommon.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Seeding\" />
+  </ItemGroup>
+
 </Project>
