@@ -27,5 +27,14 @@ namespace NaturaStore.Data.Common
 
             public const int PriceScale = 2;
         }
+
+        public static class Producer
+        {
+            public const int NameMaxLength = 100;
+            public const int DescriptionMaxLength = 500;
+            public const int LocationMaxLength = 100;
+            public const int ContactEmailMaxLength = 100;
+            public const int PhoneNumberMaxLength = 20;
+        }
     }
 }

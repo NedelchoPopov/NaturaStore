@@ -23,5 +23,9 @@ namespace NaturaStore.Data.Models
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; } = null!;
+
+        public int ProducerId { get; set; }
+
+        public virtual Producer Producer { get; set; } = null!;
     }
 }
