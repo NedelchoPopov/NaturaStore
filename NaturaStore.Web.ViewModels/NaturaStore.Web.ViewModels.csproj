@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NaturaStore.Data.Common\NaturaStore.Data.Common.csproj" />
+    <ProjectReference Include="..\NaturaStore.GCommon\NaturaStore.GCommon.csproj" />
+  </ItemGroup>
+
 </Project>

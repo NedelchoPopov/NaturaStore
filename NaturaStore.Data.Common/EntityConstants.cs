@@ -19,13 +19,23 @@ namespace NaturaStore.Data.Common
 
         public static class Product 
         {
+            public const int NameMinLenght = 3;
+
             public const int NameMaxLenght = 85;
+
+            public const int DescriptionMinLenght = 10;
 
             public const int DescriptionMaxLenght = 1000;
 
             public const int PricePrecision = 10;
 
             public const int PriceScale = 2;
+
+            public const double MinPrice = 0.1;
+
+            public const double MaxPrice = 10_000;
+
+            public const int ImageUrlMaxLength = 2048;
         }
 
         public static class Producer

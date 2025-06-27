@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
 using NaturaStore.Data.Seeding;
+using NaturaStore.Services.Core;
+using NaturaStore.Services.Core.Interfaces;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     options.Password.RequiredUniqueChars = 0;
 })
 .AddEntityFrameworkStores<NaturaStoreDbContext>();
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddControllersWithViews();
 
