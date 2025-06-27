@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web", "NaturaStore\NaturaStore.Web.csproj", "{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Web", "NaturaStore\NaturaStore.Web.csproj", "{8E58AEFA-46E4-4FC8-ABDC-9C436FC95F04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B6897A6A-1B35-4EAD-AF31-2F63C3964CA6}"
 EndProject
@@ -13,23 +13,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{43EAA658-9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Data", "NaturaStore.Data\NaturaStore.Data.csproj", "{E8F52052-F6B1-4E29-8333-1B090FBC14F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Data", "NaturaStore.Data\NaturaStore.Data.csproj", "{E8F52052-F6B1-4E29-8333-1B090FBC14F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Data.Common", "NaturaStore.Data.Common\NaturaStore.Data.Common.csproj", "{4F5EF02A-0D2E-414F-9301-8646264B71CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Data.Common", "NaturaStore.Data.Common\NaturaStore.Data.Common.csproj", "{4F5EF02A-0D2E-414F-9301-8646264B71CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Data.Models", "NaturaStore.Data.Models\NaturaStore.Data.Models.csproj", "{71C54A74-BD09-4E81-B1C7-F75C3950B017}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Data.Models", "NaturaStore.Data.Models\NaturaStore.Data.Models.csproj", "{71C54A74-BD09-4E81-B1C7-F75C3950B017}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.GCommon", "NaturaStore.GCommon\NaturaStore.GCommon.csproj", "{D85A36CF-363E-47D4-929B-394E1A1C5E0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.GCommon", "NaturaStore.GCommon\NaturaStore.GCommon.csproj", "{D85A36CF-363E-47D4-929B-394E1A1C5E0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Services.AutoMapping", "NaturaStore.Services.AutoMapping\NaturaStore.Services.AutoMapping.csproj", "{9B8762B3-5807-4C72-A847-34362E833E58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Services.AutoMapping", "NaturaStore.Services.AutoMapping\NaturaStore.Services.AutoMapping.csproj", "{9B8762B3-5807-4C72-A847-34362E833E58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Services.Common", "NaturaStore.Services.Common\NaturaStore.Services.Common.csproj", "{924F50A9-1E3B-4715-BBC8-768A9229E7CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Services.Common", "NaturaStore.Services.Common\NaturaStore.Services.Common.csproj", "{924F50A9-1E3B-4715-BBC8-768A9229E7CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Services.Core", "NaturaStore.Services.Core\NaturaStore.Services.Core.csproj", "{EF909577-1CD3-4357-8434-E805F61431AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Services.Core", "NaturaStore.Services.Core\NaturaStore.Services.Core.csproj", "{EF909577-1CD3-4357-8434-E805F61431AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web.Infrastructure", "NaturaStore.Web.Infrastructure\NaturaStore.Web.Infrastructure.csproj", "{A95AABE3-6F77-4009-9841-F142D28DCF9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Web.Infrastructure", "NaturaStore.Web.Infrastructure\NaturaStore.Web.Infrastructure.csproj", "{A95AABE3-6F77-4009-9841-F142D28DCF9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web.ViewModels", "NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj", "{22D7999A-3E1F-48EA-9665-0A7B64ED7959}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Web.ViewModels", "NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj", "{22D7999A-3E1F-48EA-9665-0A7B64ED7959}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

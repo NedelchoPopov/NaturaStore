@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
+using NaturaStore.Data.Seeding;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,7 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -51,6 +53,8 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+await SeedDatabase(app);
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -61,3 +65,10 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+static async Task SeedDatabase(IApplicationBuilder app)
+{
+    using var scope = app.ApplicationServices.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<NaturaStoreDbContext>();
+    await DbSeeder.SeedAsync(dbContext);
+}
