@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace NaturaStore.Web.ViewModels.Product
 {
@@ -9,7 +10,7 @@ namespace NaturaStore.Web.ViewModels.Product
     {
         [Required]
         [MinLength(NameMinLenght)]
-        [MaxLength(NameMinLenght)]
+        [MaxLength(NameMaxLenght)]
         public string Name { get; set; } = null!;
 
         [Required]
@@ -34,5 +35,11 @@ namespace NaturaStore.Web.ViewModels.Product
         public int ProducerId { get; set; }
 
         
+        public IEnumerable<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
+        public IEnumerable<SelectListItem> Producers { get; set; } = new List<SelectListItem>();
+
+        
+        public string? NewProducerName { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
 using NaturaStore.Data.Models;
 using NaturaStore.Services.Core.Interfaces;
@@ -20,9 +21,44 @@ namespace NaturaStore.Services.Core
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetAllCategoriesAsync()
+        {
+            return await _dbContext.Categories
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetAllProducersAsync()
+        {
+            return await _dbContext.Producers
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                })
+                .ToListAsync();
+        }
+
         public async Task AddProductAsync(CreateProductViewModel inputModel)
         {
-            
+            if (!string.IsNullOrWhiteSpace(inputModel.NewProducerName))
+            {
+                var newProducer = new Producer
+                {
+                    Name = inputModel.NewProducerName
+                };
+
+                await _dbContext.Producers.AddAsync(newProducer);
+                await _dbContext.SaveChangesAsync();
+
+                inputModel.ProducerId = newProducer.Id;
+            }
+
+
             bool categoryExists = await _dbContext.Categories
             .AnyAsync(c => c.Id == inputModel.CategoryId);
 
