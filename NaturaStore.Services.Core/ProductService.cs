@@ -21,35 +21,28 @@ namespace NaturaStore.Services.Core
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            return await _dbContext.Categories
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = c.Name
-                })
-                .ToListAsync();
+            return await _dbContext.Categories.ToListAsync();
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetAllProducersAsync()
+        public async Task<IEnumerable<Producer>> GetAllProducersAsync()
         {
-            return await _dbContext.Producers
-                .Select(p => new SelectListItem
-                {
-                    Value = p.Id.ToString(),
-                    Text = p.Name
-                })
-                .ToListAsync();
+            return await _dbContext.Producers.ToListAsync();
         }
 
         public async Task AddProductAsync(CreateProductViewModel inputModel)
         {
-            if (!string.IsNullOrWhiteSpace(inputModel.NewProducerName))
+            // Ако потребителят е въвел нов производител - създаваме го
+            if (inputModel.NewProducer != null && !string.IsNullOrWhiteSpace(inputModel.NewProducer.Name))
             {
                 var newProducer = new Producer
                 {
-                    Name = inputModel.NewProducerName
+                    Name = inputModel.NewProducer.Name,
+                    Description = inputModel.NewProducer.Description,
+                    Location = inputModel.NewProducer.Location,
+                    ContactEmail = inputModel.NewProducer.ContactEmail,
+                    PhoneNumber = inputModel.NewProducer.PhoneNumber
                 };
 
                 await _dbContext.Producers.AddAsync(newProducer);
@@ -58,16 +51,16 @@ namespace NaturaStore.Services.Core
                 inputModel.ProducerId = newProducer.Id;
             }
 
-
+            // Валидация: дали категорията съществува
             bool categoryExists = await _dbContext.Categories
-            .AnyAsync(c => c.Id == inputModel.CategoryId);
+                .AnyAsync(c => c.Id == inputModel.CategoryId);
 
             if (!categoryExists)
             {
                 throw new ArgumentException("Invalid Category ID.");
             }
 
-            
+            // Валидация: дали производителят съществува
             bool producerExists = await _dbContext.Producers
                 .AnyAsync(p => p.Id == inputModel.ProducerId);
 
@@ -75,7 +68,9 @@ namespace NaturaStore.Services.Core
             {
                 throw new ArgumentException("Invalid Producer ID.");
             }
-            Product product = new Product
+
+            // Създаваме продукта
+            var product = new Product
             {
                 Name = inputModel.Name,
                 Description = inputModel.Description,
@@ -88,6 +83,7 @@ namespace NaturaStore.Services.Core
 
             await _dbContext.Products.AddAsync(product);
             await _dbContext.SaveChangesAsync();
+
         }
 
     }

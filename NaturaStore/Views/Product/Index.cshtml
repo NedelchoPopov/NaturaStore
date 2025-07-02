@@ -1,0 +1,33 @@
+﻿@model IEnumerable<NaturaStore.Data.Models.Product>
+
+@{
+    ViewData["Title"] = "Продукти";
+}
+
+<h2>Списък с продукти</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Име</th>
+            <th>Категория</th>
+            <th>Производител</th>
+            <th>Цена</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Category?.Name</td>
+                <td>@product.Producer?.Name</td>
+                <td>@product.Price лв.</td>
+                <td>
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -10,35 +10,32 @@ namespace NaturaStore.Web.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
-        private readonly NaturaStoreDbContext _dbContext;
 
-        public ProductController(IProductService productService,NaturaStoreDbContext dbContext)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _dbContext = dbContext;
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-
-            var model = new CreateProductViewModel
-            {
-                Categories = await _productService.GetAllCategoriesAsync(),
-                Producers = await _productService.GetAllProducersAsync()
-            };
-
+            var model = new CreateProductViewModel();
+            await PopulateCategoriesAndProducersAsync(model);
             return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductViewModel model)
         {
-            
             if (!ModelState.IsValid)
             {
-                model.Categories = await _productService.GetAllCategoriesAsync();
-                model.Producers = await _productService.GetAllProducersAsync();
+                if (model.ProducerId == 0 || model.ProducerId.ToString() == "none" ||
+                   (model.NewProducer != null && !string.IsNullOrWhiteSpace(model.NewProducer.Name)))
+                {
+                    model.ProducerId = 0;
+                }
+
+                await PopulateCategoriesAndProducersAsync(model);
                 return View(model);
             }
 
@@ -46,6 +43,29 @@ namespace NaturaStore.Web.Controllers
 
             TempData["Success"] = "Продуктът беше създаден успешно!";
             return RedirectToAction("Create");
+        }
+
+        // 👇 Тук изнесохме логиката за пълнене на DropDown-ите
+        private async Task PopulateCategoriesAndProducersAsync(CreateProductViewModel model)
+        {
+            var categories = await _productService.GetAllCategoriesAsync();
+            var producers = await _productService.GetAllProducersAsync();
+
+            model.Categories = categories
+                .Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                })
+                .ToList();
+
+            model.Producers = producers
+                .Select(p => new SelectListItem
+                {
+                    Text = p.Name,
+                    Value = p.Id.ToString()
+                })
+                .ToList();
         }
     }
 }

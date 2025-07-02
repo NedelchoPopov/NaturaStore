@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using NaturaStore.Data.Models;
 using NaturaStore.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace NaturaStore.Services.Core.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<SelectListItem>> GetAllCategoriesAsync();
-        Task<IEnumerable<SelectListItem>> GetAllProducersAsync();
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
+        Task<IEnumerable<Producer>> GetAllProducersAsync();
         Task AddProductAsync(CreateProductViewModel model);
 
     }

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NaturaStore.Web.ViewModels.Producer;
+
 
 namespace NaturaStore.Web.ViewModels.Product
 {
@@ -38,8 +40,6 @@ namespace NaturaStore.Web.ViewModels.Product
         public IEnumerable<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
         public IEnumerable<SelectListItem> Producers { get; set; } = new List<SelectListItem>();
 
-        
-        public string? NewProducerName { get; set; }
-
+        public CreateNewProducerViewModel? NewProducer { get; set; }
     }
 }
