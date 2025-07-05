@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NaturaStore.Services.Core.Interfaces;
 using NaturaStore.Web.ViewModels.Product;
 
@@ -15,6 +16,7 @@ namespace NaturaStore.Web.Controllers
             _productService = productService;
             _producerService = producerService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -47,7 +49,7 @@ namespace NaturaStore.Web.Controllers
         private async Task PopulateCategoriesAndProducersAsync(CreateProductViewModel model)
         {
             var categories = await _productService.GetAllCategoriesAsync();
-            var producers = await _productService.GetAllProducersAsync();
+            var producers = await _producerService.GetAllProducersAsync();
 
             model.Categories = categories.Select(c => new SelectListItem
             {
@@ -81,6 +83,28 @@ namespace NaturaStore.Web.Controllers
             return View(product);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var viewModel = await _productService.GetProductForEditAsync(id);
+            if (viewModel == null) return NotFound();
 
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await _productService.GetCategoriesAsync();
+                model.Producers = await _producerService.GetProducersAsync();
+                return View(model);
+            }
+
+            var success = await _productService.UpdateAsync(model);
+            if (!success) return NotFound();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
 using NaturaStore.Data.Models;
 using NaturaStore.Services.Core.Interfaces;
@@ -13,11 +14,6 @@ namespace NaturaStore.Services.Core
         public ProducerService(NaturaStoreDbContext dbContext)
         {
             _dbContext = dbContext;
-        }
-
-        public async Task<IEnumerable<Producer>> GetAllProducersAsync()
-        {
-            return await _dbContext.Producers.ToListAsync();
         }
 
         public async Task<int> CreateProducerAsync(CreateNewProducerViewModel model)
@@ -35,6 +31,27 @@ namespace NaturaStore.Services.Core
             await _dbContext.SaveChangesAsync();
 
             return producer.Id;
+        }
+
+        public async Task<IEnumerable<Producer>> GetAllProducersAsync()
+        {
+            return await _dbContext.Producers.ToListAsync();
+        }
+
+        public async Task<bool> ProducerExistsAsync(int producerId)
+        {
+            return await _dbContext.Producers.AnyAsync(p => p.Id == producerId);
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetProducersAsync()
+        {
+            return await _dbContext.Producers
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                })
+                .ToListAsync();
         }
     }
 }

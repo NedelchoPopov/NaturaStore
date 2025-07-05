@@ -1,21 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using NaturaStore.Data.Models;
-using NaturaStore.Web.ViewModels.Producer;
 using NaturaStore.Web.ViewModels.Product;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NaturaStore.Services.Core.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<Category>> GetAllCategoriesAsync();
-        Task<IEnumerable<Producer>> GetAllProducersAsync();
+        Task AddProductAsync(CreateProductViewModel inputModel);
         Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync();
-        Task AddProductAsync(CreateProductViewModel model);
         Task<ProductDetailsViewModel?> GetProductByIdAsync(int id);
+        Task<EditProductViewModel?> GetProductForEditAsync(int id);
+        Task<bool> UpdateAsync(EditProductViewModel model);
+        Task<IEnumerable<Category>> GetAllCategoriesAsync();
+        Task<IEnumerable<SelectListItem>> GetCategoriesAsync();
+        Task<IEnumerable<SelectListItem>> GetProducersAsync();
     }
 }
