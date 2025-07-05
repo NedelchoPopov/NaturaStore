@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace NaturaStore.Services.Core
 {
-    public class ProductService : IProductService , IProducerService
+    public class ProductService : IProductService, IProducerService
     {
         private readonly NaturaStoreDbContext _dbContext;
 
@@ -106,6 +106,25 @@ namespace NaturaStore.Services.Core
                     ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl)
                 })
                 .ToListAsync();
+        }
+
+        public async Task<ProductDetailsViewModel?> GetProductByIdAsync(int id)
+        {
+            return await _dbContext.Products
+                .Include(p => p.Category)
+                .Include(p => p.Producer)
+                .Where(p => p.Id == id)
+                .Select(p => new ProductDetailsViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl),
+                    Category = p.Category.Name,
+                    Producer = p.Producer.Name
+                })
+                .FirstOrDefaultAsync();
         }
 
 

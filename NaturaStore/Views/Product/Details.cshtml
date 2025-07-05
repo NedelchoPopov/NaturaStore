@@ -1,0 +1,18 @@
+﻿@using NaturaStore.Web.ViewModels.Product
+@model ProductDetailsViewModel
+
+<div class="container mt-4">
+    <h1 class="text-dark">@Model.Name</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded" />
+        </div>
+        <div class="col-md-8">
+            <p><strong>Price:</strong> @Model.Price лв</p>
+            <p><strong>Category:</strong> @Model.Category</p>
+            <p><strong>Producer:</strong> @Model.Producer</p>
+            <p><strong>Description:</strong> @Model.Description</p>
+            <a asp-action="Index" class="btn btn-secondary">Back to list</a>
+        </div>
+    </div>
+</div>
