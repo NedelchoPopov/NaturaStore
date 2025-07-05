@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
 using NaturaStore.Data.Models;
 using NaturaStore.Services.Core.Interfaces;
+using NaturaStore.Web.ViewModels.Producer;
 using NaturaStore.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace NaturaStore.Services.Core
 {
-    public class ProductService : IProductService
+    public class ProductService : IProductService , IProducerService
     {
         private readonly NaturaStoreDbContext _dbContext;
 
@@ -31,45 +32,47 @@ namespace NaturaStore.Services.Core
             return await _dbContext.Producers.ToListAsync();
         }
 
+        public async Task<bool> ProducerExistsAsync(int producerId)
+        {
+            return await _dbContext.Producers.AnyAsync(p => p.Id == producerId);
+        }
+
+        public async Task<int> CreateProducerAsync(CreateNewProducerViewModel newProducer)
+        {
+            var producer = new Producer
+            {
+                Name = newProducer.Name,
+                Description = newProducer.Description,
+                Location = newProducer.Location,
+                ContactEmail = newProducer.ContactEmail,
+                PhoneNumber = newProducer.PhoneNumber,
+            };
+
+            _dbContext.Producers.Add(producer);
+            await _dbContext.SaveChangesAsync();
+
+            return producer.Id;
+        }
+
         public async Task AddProductAsync(CreateProductViewModel inputModel)
         {
-            // Ако потребителят е въвел нов производител - създаваме го
-            if (inputModel.NewProducer != null && !string.IsNullOrWhiteSpace(inputModel.NewProducer.Name))
+            if (inputModel.ProducerId == 0)
             {
-                var newProducer = new Producer
-                {
-                    Name = inputModel.NewProducer.Name,
-                    Description = inputModel.NewProducer.Description,
-                    Location = inputModel.NewProducer.Location,
-                    ContactEmail = inputModel.NewProducer.ContactEmail,
-                    PhoneNumber = inputModel.NewProducer.PhoneNumber
-                };
-
-                await _dbContext.Producers.AddAsync(newProducer);
-                await _dbContext.SaveChangesAsync();
-
-                inputModel.ProducerId = newProducer.Id;
+                throw new ArgumentException("Producer must be selected or a new one must be provided.");
             }
 
-            // Валидация: дали категорията съществува
-            bool categoryExists = await _dbContext.Categories
-                .AnyAsync(c => c.Id == inputModel.CategoryId);
-
+            bool categoryExists = await _dbContext.Categories.AnyAsync(c => c.Id == inputModel.CategoryId);
             if (!categoryExists)
             {
                 throw new ArgumentException("Invalid Category ID.");
             }
 
-            // Валидация: дали производителят съществува
-            bool producerExists = await _dbContext.Producers
-                .AnyAsync(p => p.Id == inputModel.ProducerId);
-
+            bool producerExists = await _dbContext.Producers.AnyAsync(p => p.Id == inputModel.ProducerId);
             if (!producerExists)
             {
                 throw new ArgumentException("Invalid Producer ID.");
             }
 
-            // Създаваме продукта
             var product = new Product
             {
                 Name = inputModel.Name,
@@ -83,8 +86,11 @@ namespace NaturaStore.Services.Core
 
             await _dbContext.Products.AddAsync(product);
             await _dbContext.SaveChangesAsync();
-
         }
+
+
+
+
 
     }
 }

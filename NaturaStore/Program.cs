@@ -36,6 +36,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddEntityFrameworkStores<NaturaStoreDbContext>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProducerService, ProducerService>();
 
 builder.Services.AddControllersWithViews();
 

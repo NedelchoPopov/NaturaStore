@@ -11,6 +11,8 @@ namespace NaturaStore.Web.ViewModels.Producer
 
     public class CreateNewProducerViewModel
     {
+        public int ProducerId { get; set; }
+
         [Required(ErrorMessage = "Името на производителя е задължително.")]
         [MinLength(NameMinLenght, ErrorMessage = "Името трябва да е съдържа поне 2 символа.")]
         [MaxLength(NameMaxLength, ErrorMessage = "Името трябва да е до 100 символа.")]

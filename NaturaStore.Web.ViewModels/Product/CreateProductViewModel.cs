@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using NaturaStore.Web.ViewModels.Producer;
-
 
 namespace NaturaStore.Web.ViewModels.Product
 {
@@ -25,8 +23,7 @@ namespace NaturaStore.Web.ViewModels.Product
 
         [Display(Name = "Снимка (URL)")]
         [MaxLength(ImageUrlMaxLength)]
-        public string? ImageUrl { get; set; }
-            = $"/images/{NoImageUrl}";
+        public string? ImageUrl { get; set; } = $"/images/{NoImageUrl}";
 
         [Required]
         [Display(Name = "Категория")]
@@ -36,10 +33,7 @@ namespace NaturaStore.Web.ViewModels.Product
         [Display(Name = "Производител")]
         public int ProducerId { get; set; }
 
-        
         public IEnumerable<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
         public IEnumerable<SelectListItem> Producers { get; set; } = new List<SelectListItem>();
-
-        public CreateNewProducerViewModel? NewProducer { get; set; }
     }
 }
