@@ -25,6 +25,7 @@
     <ProjectReference Include="..\NaturaStore.Services.AutoMapping\NaturaStore.Services.AutoMapping.csproj" />
     <ProjectReference Include="..\NaturaStore.Services.Common\NaturaStore.Services.Common.csproj" />
     <ProjectReference Include="..\NaturaStore.Services.Core\NaturaStore.Services.Core.csproj" />
+    <ProjectReference Include="..\NaturaStore.Web.Helpers\NaturaStore.Web.Helpers.csproj" />
     <ProjectReference Include="..\NaturaStore.Web.Infrastructure\NaturaStore.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj" />
   </ItemGroup>

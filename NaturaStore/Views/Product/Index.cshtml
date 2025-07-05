@@ -1,33 +1,45 @@
-﻿@model IEnumerable<NaturaStore.Data.Models.Product>
+﻿@using NaturaStore.Web.Helpers
+@using NaturaStore.Web.ViewModels.Product
+
+@model IEnumerable<NaturaStore.Web.ViewModels.Product.ProductListViewModel>
 
 @{
     ViewData["Title"] = "Продукти";
 }
 
-<h2>Списък с продукти</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="text-light fw-bold">Browse Products</h1>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary fw-bold">
+            <i class="bi bi-arrow-left"></i> Back to Home Page
+        </a>
+    </div>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Име</th>
-            <th>Категория</th>
-            <th>Производител</th>
-            <th>Цена</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
+    <div class="d-flex flex-column gap-2">
+        @foreach (ProductListViewModel product in Model)
         {
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.Category?.Name</td>
-                <td>@product.Producer?.Name</td>
-                <td>@product.Price лв.</td>
-                <td>
-                   
-                </td>
-            </tr>
+                <div class="card shadow-lg border-0 rounded-3 d-flex flex-row align-items-center p-2"
+                     style="height: 140px; max-height: 140px;">
+                        <img src="@ImageHelper.GetValidImageUrl(product.ImageUrl)" class="rounded"
+                         alt="@product.Name"
+                         style="width: 100px; height: 130px; object-fit: cover;">
+                    <div class="card-body ms-3 p-2 text-dark" style="flex-grow: 1;">
+                        <h6 class="fw-bold mb-1">@product.Name</h6>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem;">
+                            <strong>Category:</strong> @product.Category |
+                            <strong>Producer:</strong> @product.Producer
+                        </p>
+                        <p class="text-muted mb-1" style="font-size: 0.85rem;">
+                            <strong>Price:</strong> @product.Price лв.
+                        </p>
+                    </div>
+                    <div class="me-3">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
+                           class="btn btn-primary btn-sm rounded-pill px-4 fw-bold">
+                            View Details
+                        </a>
+                    </div>
+                </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>

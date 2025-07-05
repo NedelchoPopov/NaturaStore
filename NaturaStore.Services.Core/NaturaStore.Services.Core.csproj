@@ -11,6 +11,7 @@
     <ProjectReference Include="..\NaturaStore.Data\NaturaStore.Data.csproj" />
     <ProjectReference Include="..\NaturaStore.GCommon\NaturaStore.GCommon.csproj" />
     <ProjectReference Include="..\NaturaStore.Services.Common\NaturaStore.Services.Common.csproj" />
+    <ProjectReference Include="..\NaturaStore.Web.Helpers\NaturaStore.Web.Helpers.csproj" />
     <ProjectReference Include="..\NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj" />
   </ItemGroup>
 

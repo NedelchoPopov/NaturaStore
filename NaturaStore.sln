@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Web.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaturaStore.Web.ViewModels", "NaturaStore.Web.ViewModels\NaturaStore.Web.ViewModels.csproj", "{22D7999A-3E1F-48EA-9665-0A7B64ED7959}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaturaStore.Web.Helpers", "NaturaStore.Web.Helpers\NaturaStore.Web.Helpers.csproj", "{B20ACEDD-AFFD-4669-8EA8-5C5E68318784}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D7999A-3E1F-48EA-9665-0A7B64ED7959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B20ACEDD-AFFD-4669-8EA8-5C5E68318784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B20ACEDD-AFFD-4669-8EA8-5C5E68318784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B20ACEDD-AFFD-4669-8EA8-5C5E68318784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B20ACEDD-AFFD-4669-8EA8-5C5E68318784}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,6 +97,7 @@ Global
 		{EF909577-1CD3-4357-8434-E805F61431AB} = {26CBACBB-03BB-44C3-941A-7E54BFF1A0CF}
 		{A95AABE3-6F77-4009-9841-F142D28DCF9A} = {C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}
 		{22D7999A-3E1F-48EA-9665-0A7B64ED7959} = {C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}
+		{B20ACEDD-AFFD-4669-8EA8-5C5E68318784} = {C78D84B6-3A0B-4DD0-8E11-7FB1A9F4B9DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A0F36C3-7307-4A08-A3B1-6FF4412D8020}

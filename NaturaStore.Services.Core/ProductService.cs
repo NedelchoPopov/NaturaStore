@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
 using NaturaStore.Data.Models;
 using NaturaStore.Services.Core.Interfaces;
 using NaturaStore.Web.ViewModels.Producer;
 using NaturaStore.Web.ViewModels.Product;
+using NaturaStore.Web.Helpers;
+using NaturaStore.GCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,7 +81,7 @@ namespace NaturaStore.Services.Core
                 Name = inputModel.Name,
                 Description = inputModel.Description,
                 Price = inputModel.Price,
-                ImageUrl = inputModel.ImageUrl,
+                ImageUrl = ImageHelper.GetValidImageUrl(inputModel.ImageUrl),
                 CategoryId = inputModel.CategoryId,
                 ProducerId = inputModel.ProducerId,
                 CreatedOn = DateTime.UtcNow
@@ -86,6 +89,23 @@ namespace NaturaStore.Services.Core
 
             await _dbContext.Products.AddAsync(product);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
+        {
+            return await _dbContext.Products
+                .Include(p => p.Category)
+                .Include(p => p.Producer)
+                .Select(p => new ProductListViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Category = p.Category.Name,
+                    Producer = p.Producer.Name,
+                    Price = p.Price,
+                    ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl)
+                })
+                .ToListAsync();
         }
 
 

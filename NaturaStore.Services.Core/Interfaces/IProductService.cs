@@ -14,6 +14,7 @@ namespace NaturaStore.Services.Core.Interfaces
     {
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<IEnumerable<Producer>> GetAllProducersAsync();
+        Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync();
         Task AddProductAsync(CreateProductViewModel model);
 
     }

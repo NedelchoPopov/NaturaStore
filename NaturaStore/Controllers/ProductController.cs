@@ -62,6 +62,13 @@ namespace NaturaStore.Web.Controllers
             }).ToList();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var products = await _productService.GetAllProductsAsync();
+            return View(products);
+        }
+
 
     }
 }
