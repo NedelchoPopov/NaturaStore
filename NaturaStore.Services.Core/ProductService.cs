@@ -134,5 +134,32 @@ namespace NaturaStore.Services.Core
         {
             return await _dbContext.Categories.ToListAsync();
         }
+
+        public async Task<DeleteProductViewModel?> GetProductForDeleteAsync(int id)
+        {
+            return await _dbContext.Products
+                .Where(p => p.Id == id)
+                .Select(p => new DeleteProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl),
+                    Price = p.Price
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> DeleteProductAsync(int id)
+        {
+            var product = await _dbContext.Products.FindAsync(id);
+            if (product == null)
+            {
+                return false;
+            }
+
+            _dbContext.Products.Remove(product);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
     }
 }

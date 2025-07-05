@@ -14,5 +14,7 @@ namespace NaturaStore.Services.Core.Interfaces
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetProducersAsync();
+        Task<DeleteProductViewModel?> GetProductForDeleteAsync(int id);
+        Task<bool> DeleteProductAsync(int id);
     }
 }
