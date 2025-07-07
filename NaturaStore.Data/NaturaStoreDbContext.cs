@@ -19,6 +19,12 @@ namespace NaturaStore.Data
 
         public virtual DbSet<Producer> Producers { get; set; } = null!;
 
+        public virtual DbSet<Order> Orders { get; set; } = null!;
+
+        public virtual DbSet<OrderItem> OrderItems { get; set; } = null!;
+
+        public virtual DbSet<ApplicationUserStore> ApplicationUserStores { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
