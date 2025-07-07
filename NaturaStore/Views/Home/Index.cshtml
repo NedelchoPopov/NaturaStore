@@ -1,8 +1,58 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Welcome to NaturaStore!</h1>
+        <p class="lead text-muted">
+            Real homemade products and handcrafted souvenirs – all in one place.
+        </p>
+        <div class="mt-4">
+            <a href="/Product" class="btn btn-primary btn-lg me-3">
+                🛒 View All Products
+            </a>
+            <a href="/Product/Create" class="btn btn-success btn-lg">
+                ➕ Add New Product
+            </a>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="" class="card-img-top" alt="Homemade Jam">
+                <div class="card-body">
+                    <h5 class="card-title">Homemade Goodies</h5>
+                    <p class="card-text">Jams, compotes, herbs, honey, and cheese – all made with care and love.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="" class="card-img-top" alt="Herbal Teas">
+                <div class="card-body">
+                    <h5 class="card-title">Herbs & Teas</h5>
+                    <p class="card-text">Natural dried herbs from clean regions – perfect for tea or home remedies.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="" class="card-img-top" alt="Handcrafted Souvenirs">
+                <div class="card-body">
+                    <h5 class="card-title">Handmade Souvenirs</h5>
+                    <p class="card-text">T-shirts, mugs, and bags with unique designs crafted by local artists.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <h4 class="fw-light text-muted">Support small producers and artisans. 💚</h4>
+    </div>
 </div>
