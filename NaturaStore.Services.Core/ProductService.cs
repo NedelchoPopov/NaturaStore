@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
 using NaturaStore.Data.Models;
+using NaturaStore.Data.Repository.Interfaces;
 using NaturaStore.Services.Core.Interfaces;
 using NaturaStore.Web.Helpers;
 using NaturaStore.Web.ViewModels.Product;
@@ -10,16 +11,18 @@ namespace NaturaStore.Services.Core
 {
     public class ProductService : IProductService
     {
+        private readonly IProductRepository _productRepository;
         private readonly NaturaStoreDbContext _dbContext;
 
-        public ProductService(NaturaStoreDbContext dbContext)
+        public ProductService(IProductRepository productRepository, NaturaStoreDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _productRepository = productRepository;
+            _dbContext = dbContext; 
         }
 
         public async Task AddProductAsync(CreateProductViewModel inputModel)
         {
-            var product = new Data.Models.Product
+            var product = new Product
             {
                 Name = inputModel.Name,
                 Description = inputModel.Description,
@@ -30,25 +33,27 @@ namespace NaturaStore.Services.Core
                 CreatedOn = DateTime.UtcNow
             };
 
-            await _dbContext.Products.AddAsync(product);
-            await _dbContext.SaveChangesAsync();
+            await _productRepository.AddAsync(product);
+           
         }
 
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
-            return await _dbContext.Products
-                .Include(p => p.Category)
-                .Include(p => p.Producer)
-                .Select(p => new ProductListViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Category = p.Category.Name,
-                    Producer = p.Producer.Name,
-                    Price = p.Price,
-                    ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl)
-                })
-                .ToListAsync();
+            var products = await _productRepository
+               .GetAllAttached()
+               .Include(p => p.Category)
+               .Include(p => p.Producer)
+               .ToListAsync();
+
+            return products.Select(p => new ProductListViewModel
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Category = p.Category.Name,
+                Producer = p.Producer.Name,
+                Price = p.Price,
+                ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl)
+            });
         }
 
         public async Task<ProductDetailsViewModel?> GetProductByIdAsync(int id)
@@ -72,7 +77,7 @@ namespace NaturaStore.Services.Core
 
         public async Task<EditProductViewModel?> GetProductForEditAsync(int id)
         {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null) return null;
 
             var categories = await GetCategoriesAsync();
@@ -94,7 +99,7 @@ namespace NaturaStore.Services.Core
 
         public async Task<bool> UpdateAsync(EditProductViewModel model)
         {
-            var product = await _dbContext.Products.FindAsync(model.Id);
+            var product = await _productRepository.GetByIdAsync(model.Id);
             if (product == null) return false;
 
             product.Name = model.Name;
@@ -104,8 +109,7 @@ namespace NaturaStore.Services.Core
             product.ProducerId = model.ProducerId;
             product.ImageUrl = model.ImageUrl;
 
-            await _dbContext.SaveChangesAsync();
-            return true;
+            return await _productRepository.UpdateAsync(product);
         }
 
         public async Task<IEnumerable<SelectListItem>> GetCategoriesAsync()
@@ -137,29 +141,27 @@ namespace NaturaStore.Services.Core
 
         public async Task<DeleteProductViewModel?> GetProductForDeleteAsync(int id)
         {
-            return await _dbContext.Products
-                .Where(p => p.Id == id)
-                .Select(p => new DeleteProductViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    ImageUrl = ImageHelper.GetValidImageUrl(p.ImageUrl),
-                    Price = p.Price
-                })
-                .FirstOrDefaultAsync();
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null) return null;
+
+            return new DeleteProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                ImageUrl = ImageHelper.GetValidImageUrl(product.ImageUrl)
+            };
         }
 
         public async Task<bool> DeleteProductAsync(int id)
         {
-            var product = await _dbContext.Products.FindAsync(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
             {
                 return false;
             }
 
-            _dbContext.Products.Remove(product);
-            await _dbContext.SaveChangesAsync();
-            return true;
+            return await _productRepository.HardDeleteAsync(product);
         }
     }
 }

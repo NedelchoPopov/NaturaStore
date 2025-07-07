@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NaturaStore.Data;
+using NaturaStore.Data.Repository.Interfaces;
+using NaturaStore.Data.Repository;
 using NaturaStore.Data.Seeding;
 using NaturaStore.Services.Core;
 using NaturaStore.Services.Core.Interfaces;
@@ -35,6 +37,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
 .AddEntityFrameworkStores<NaturaStoreDbContext>();
 
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 
