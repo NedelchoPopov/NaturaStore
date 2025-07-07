@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NaturaStore.Data;
 
@@ -11,9 +12,11 @@ using NaturaStore.Data;
 namespace NaturaStore.Data.Migrations
 {
     [DbContext(typeof(NaturaStoreDbContext))]
-    partial class NaturaStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250707181037_OrderOrdedrItemAndApplicationUserStore")]
+    partial class OrderOrdedrItemAndApplicationUserStore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
