@@ -2,25 +2,34 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NaturaStore.Data.Models;
 
-namespace NaturaStore.Data.Configurations
+namespace NaturaStore.Data.Configuration
 {
-    public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUserStore>
+    public class ApplicationUserStoreConfiguration : IEntityTypeConfiguration<ApplicationUserStore>
     {
         public void Configure(EntityTypeBuilder<ApplicationUserStore> builder)
         {
-            builder
-                .Property(u => u.FirstName)
-                .IsRequired()
-                .HasMaxLength(50);
+            builder.HasKey(aus => aus.ApplicationUserId);
 
-            builder
-                .Property(u => u.LastName)
-                .IsRequired()
-                .HasMaxLength(50);
+            builder.Property(aus => aus.ApplicationUserId)
+                   .IsRequired();
 
-            builder
-                .Property(u => u.Address)
-                .HasMaxLength(250);
+            builder.Property(aus => aus.IsDeleted)
+                   .HasDefaultValue(false);
+
+            
+            builder.HasOne(aus => aus.ApplicationUser)
+                   .WithMany()  
+                   .HasForeignKey(aus => aus.ApplicationUserId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            
+            builder.HasOne(aus => aus.Product)
+                   .WithMany(p => p.UserFavoriteProducts)  
+                   .HasForeignKey(aus => aus.ProductId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            
+            builder.HasQueryFilter(aus => aus.IsDeleted == false);
         }
     }
 }

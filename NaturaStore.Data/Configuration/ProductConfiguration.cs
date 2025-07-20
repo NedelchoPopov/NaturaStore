@@ -35,6 +35,23 @@ namespace NaturaStore.Data.Configuration
             builder
                 .Property(p => p.CreatedOn)
                 .HasDefaultValueSql("GETUTCDATE()");
+
+            builder
+                .HasOne(p => p.Producer)
+                .WithMany()
+                .HasForeignKey(p => p.ProducerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            
+            builder
+                .Property(p => p.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            
+            builder
+                .HasQueryFilter(p => p.IsDeleted == false);
+
         }
     }
 }

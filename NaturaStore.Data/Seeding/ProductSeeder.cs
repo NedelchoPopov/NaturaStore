@@ -1,4 +1,9 @@
 ﻿using NaturaStore.Data.Models;
+using NaturaStore.Data.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NaturaStore.Data.Seeding
 {
@@ -6,59 +11,73 @@ namespace NaturaStore.Data.Seeding
     {
         public static async Task SeedAsync(NaturaStoreDbContext context)
         {
-            if (!context.Products.Any())
+            if (!context.Products.Any())  // Проверка дали има вече продукти в базата
             {
-                var firstCategory = context.Categories.First();
-                var firstProducer = context.Producers.First();
-
-                if (firstCategory == null || firstProducer == null)
-                    return;
-
                 var products = new List<Product>
                 {
+                    // Продукти за категория "Homemade Goodies"
                     new Product
                     {
-                        Name = "Козе сирене",
-                        Description = "Домашно козе сирене от Родопите.",
-                        Price = 14.50m,
-                        CategoryId = firstCategory.Id,
-                        ProducerId = firstProducer.Id,
-                        ImageUrl = "https://samorozi.com/image/cache/data/1%20roza/produkti/koze-sirene-0500-kg-800x800.jpg"
+                        Name = "Български мед от Рила",
+                        Description = "Натурален мед, събран от българските планини, с уникален вкус и полезни качества.",
+                        Price = 12.99m,
+                        CategoryId = context.Categories.First(c => c.Name == "Homemade Goodies").Id,
+                        ProducerId = context.Producers.First(p => p.Name == "Български мед").Id,
+                        ImageUrl = "images/products/bulgaria_honey.jpg"
                     },
                     new Product
                     {
-                        Name = "Ябълки",
-                        Description = "Сорт 'Флорина', свежи и хрупкави.",
-                        Price = 3.20m,
-                        CategoryId = firstCategory.Id,
-                        ProducerId = firstProducer.Id,
-                        ImageUrl = "https://coop.hrankoop.com/storage/images/medium/354cd8045b483fb22ee828a3df73b581.jpg"
-                    },
-
-                    new Product
-                    {
-                        Name = "Краве сирене",
-                        Description = "Натурално краве сирене от ферма в Троян.",
-                        Price = 12.90m,
-                        CategoryId = firstCategory.Id,
-                        ProducerId = firstProducer.Id,
-                        ImageUrl = "https://api.bulmag.org/images/028d07dce0b663e8febd0af9b7b0ca45.jpeg"
+                        Name = "Малиново сладко",
+                        Description = "Ръчно приготвено малиново сладко с аромат на зрели български малини.",
+                        Price = 6.50m,
+                        CategoryId = context.Categories.First(c => c.Name == "Homemade Goodies").Id,
+                        ProducerId = context.Producers.First(p => p.Name == "Натурални изкушения").Id,
+                        ImageUrl = "images/products/raspberry_jam.jpg"
                     },
 
+                    // Продукти за категория "Herbs & Teas"
                     new Product
                     {
-                        Name = "Бяло саламурено сирене",
-                        Description = "Традиционно българско бяло сирене в саламура.",
-                        Price = 11.40m,
-                        CategoryId = firstCategory.Id,
-                        ProducerId = firstProducer.Id,
-                        ImageUrl = "https://nivabg.com/wp-content/uploads/2025/02/Ovchesirene.jpeg"
+                        Name = "Чай от бял равнец",
+                        Description = "Чай с лечебни свойства, приготвен от бял равнец, събран в планините на България.",
+                        Price = 4.99m,
+                        CategoryId = context.Categories.First(c => c.Name == "Herbs & Teas").Id,
+                        ProducerId = context.Producers.First(p => p.Name == "Природен свят").Id,
+                        ImageUrl = "images/products/yarrow_tea.jpg"
                     },
+                    new Product
+                    {
+                        Name = "Билкова смес за чай",
+                        Description = "Смес от най-добрите български билки за чаене, подходяща за успокояване и детоксикация.",
+                        Price = 7.20m,
+                        CategoryId = context.Categories.First(c => c.Name == "Herbs & Teas").Id,
+                        ProducerId = context.Producers.First(p => p.Name == "Природен свят").Id,
+                        ImageUrl = "images/products/herbal_tea_mix.jpg"
+                    },
+
+                    // Продукти за категория "Handmade Souvenirs"
+                    new Product
+                    {
+                        Name = "Ръчно изработена чаша",
+                        Description = "Уникално изработена керамична чаша с ръчно рисуван български мотив.",
+                        Price = 15.00m,
+                        CategoryId = context.Categories.First(c => c.Name == "Handmade Souvenirs").Id,
+                        ProducerId = context.Producers.First(p => p.Name == "Ръчно изработени сувенири").Id,
+                        ImageUrl = "images/products/handmade_cup.jpg"
+                    },
+                    new Product
+                    {
+                        Name = "Тениска с български мотив",
+                        Description = "Ръчно изработена тениска с уникален български етно дизайн.",
+                        Price = 18.50m,
+                        CategoryId = context.Categories.First(c => c.Name == "Handmade Souvenirs").Id,
+                        ProducerId = context.Producers.First(p => p.Name == "Ръчно изработени сувенири").Id,
+                        ImageUrl = "images/products/bulgarian_tee.jpg"
+                    }
                 };
 
-                Console.WriteLine(">>> Seeding Products...");
-                await context.Products.AddRangeAsync(products);
-                await context.SaveChangesAsync();
+                await context.Products.AddRangeAsync(products);  // Добавяме продуктите
+                await context.SaveChangesAsync();  // Записваме в базата данни
             }
         }
     }

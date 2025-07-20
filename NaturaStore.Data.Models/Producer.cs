@@ -8,7 +8,7 @@ namespace NaturaStore.Data.Models
 {
     public class Producer
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public string Name { get; set; } = null!;
 
@@ -19,6 +19,8 @@ namespace NaturaStore.Data.Models
         public string? ContactEmail { get; set; }
 
         public string? PhoneNumber { get; set; }
+
+        public bool IsDeleted { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } 
             = new HashSet<Product>();

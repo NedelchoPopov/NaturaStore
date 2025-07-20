@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace NaturaStore.Data.Repository.Interfaces
 {
     public interface IProductRepository
-        : IRepository<Product, int>, IAsyncRepository<Product, int>
+        : IRepository<Product, Guid>, IAsyncRepository<Product, Guid>
     {
     }
 }

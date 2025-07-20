@@ -71,7 +71,7 @@ namespace NaturaStore.Web.Controllers
             return View(products);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(Guid id) 
         {
             var product = await _productService.GetProductByIdAsync(id);
 
@@ -83,7 +83,7 @@ namespace NaturaStore.Web.Controllers
             return View(product);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)  // Променено от int на Guid
         {
             var viewModel = await _productService.GetProductForEditAsync(id);
             if (viewModel == null) return NotFound();
@@ -108,7 +108,7 @@ namespace NaturaStore.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)  // Променено от int на Guid
         {
             var product = await _productService.GetProductForDeleteAsync(id);
             if (product == null)
@@ -121,7 +121,7 @@ namespace NaturaStore.Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)  
         {
             bool isDeleted = await _productService.DeleteProductAsync(id);
             if (!isDeleted)

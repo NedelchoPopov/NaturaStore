@@ -6,9 +6,9 @@ namespace NaturaStore.Services.Core.Interfaces
 {
     public interface IProducerService
     {
-        Task<int> CreateProducerAsync(CreateNewProducerViewModel model);
+        Task<Guid> CreateProducerAsync(CreateNewProducerViewModel model);  // Променено от int на Guid
         Task<IEnumerable<Producer>> GetAllProducersAsync();
-        Task<bool> ProducerExistsAsync(int producerId);
+        Task<bool> ProducerExistsAsync(Guid producerId);  // Променено от int на Guid
         Task<IEnumerable<SelectListItem>> GetProducersAsync();
     }
 }

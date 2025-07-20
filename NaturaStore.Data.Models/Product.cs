@@ -8,7 +8,7 @@ namespace NaturaStore.Data.Models
 {
     public class Product
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public string Name { get; set; } = null!;
 
@@ -20,12 +20,17 @@ namespace NaturaStore.Data.Models
 
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
+        public bool IsDeleted { get; set; }
+
         public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; } = null!;
 
-        public int ProducerId { get; set; }
+        public Guid ProducerId { get; set; }
 
         public virtual Producer Producer { get; set; } = null!;
+
+        public virtual ICollection<ApplicationUserStore> UserFavoriteProducts { get; set; }
+            = new HashSet<ApplicationUserStore>();
     }
 }

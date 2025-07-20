@@ -27,11 +27,11 @@ namespace NaturaStore.Web.ViewModels.Product
 
         [Required]
         [Display(Name = "Категория")]
-        public int CategoryId { get; set; }
+        public int CategoryId { get; set; }  
 
         [Required]
         [Display(Name = "Производител")]
-        public int ProducerId { get; set; }
+        public Guid ProducerId { get; set; }  
 
         public IEnumerable<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
         public IEnumerable<SelectListItem> Producers { get; set; } = new List<SelectListItem>();

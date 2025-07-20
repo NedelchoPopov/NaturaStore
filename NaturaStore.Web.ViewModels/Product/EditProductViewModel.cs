@@ -11,7 +11,7 @@ namespace NaturaStore.Web.ViewModels.Product
 {
     public class EditProductViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }  // Оставяме Guid за Id на продукта
 
         [Required]
         [StringLength(100)]
@@ -22,11 +22,11 @@ namespace NaturaStore.Web.ViewModels.Product
         [Range(0.01, 10000)]
         public decimal Price { get; set; }
 
-        [Display(Name = "Category")]
-        public int CategoryId { get; set; }
+        [Display(Name = "Категория")]
+        public int CategoryId { get; set; }  
 
-        [Display(Name = "Producer")]
-        public int ProducerId { get; set; }
+        [Display(Name = "Производител")]
+        public Guid ProducerId { get; set; }  
 
         [Display(Name = "Image URL")]
         public string? ImageUrl { get; set; }

@@ -7,7 +7,7 @@ namespace NaturaStore.Data.Repository
     using NaturaStore.Data.Repository;
     using NaturaStore.Data.Repository.Interfaces;
 
-    public class ProductRepository : BaseRepository<Product, int> , IProductRepository
+    public class ProductRepository : BaseRepository<Product, Guid> , IProductRepository
     {
         public ProductRepository(NaturaStoreDbContext dbContext)
             : base(dbContext)

@@ -1,11 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NaturaStore.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NaturaStore.Data.Configuration
 {
@@ -19,21 +14,28 @@ namespace NaturaStore.Data.Configuration
                 .Property(o => o.CreatedOn)
                 .IsRequired();
 
+            
             builder
-                .HasOne(o => o.User)
-                .WithMany() //.WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId)
+                .HasOne(o => o.User) 
+                .WithMany() 
+                .HasForeignKey(o => o.UserId) 
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            
             builder
-                .Ignore(o => o.TotalPrice); 
+                .Ignore(o => o.TotalPrice);
 
+            
             builder
                 .HasMany(o => o.OrderItems)
                 .WithOne(oi => oi.Order)
                 .HasForeignKey(oi => oi.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            
+            builder
+                .HasQueryFilter(o => o.IsDeleted == false);
         }
     }
 }

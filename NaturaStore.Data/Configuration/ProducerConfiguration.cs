@@ -39,6 +39,17 @@ namespace NaturaStore.Data.Configuration
             builder
                 .Property(p => p.PhoneNumber)
                 .HasMaxLength(PhoneNumberMaxLength);
+
+            
+            builder
+                .Property(p => p.IsDeleted)
+                .IsRequired()
+                .HasDefaultValue(false);
+
+            
+            builder
+                .HasQueryFilter(p => p.IsDeleted == false);
+
         }
     }
 }

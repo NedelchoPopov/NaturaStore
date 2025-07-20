@@ -12,20 +12,20 @@ namespace NaturaStore.Data.Seeding
                 {
                     new Category
                     {
-                        Name = "Млечни продукти",
-                        Description = "Кашкавал, сирене и други."
+                        Name = "Homemade Goodies",
+                        Description = "Jams, compotes, herbs, honey, and cheese – all made with care and love"
                     },
 
                     new Category
                     {
-                        Name = "Плодове",
-                        Description = "Свежи и сезонни плодове."
+                        Name = "Herbs & Teas",
+                        Description = "Natural dried herbs from clean regions – perfect for tea or home remedies."
                     },
 
                     new Category
                     {
-                        Name = "Зеленчуци",
-                        Description = "Био зеленчуци от местни ферми."
+                        Name = "Handmade Souvenirs",
+                        Description = "T-shirts, mugs, and bags with unique designs crafted by local artists."
                     }
 
                 };

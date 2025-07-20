@@ -16,7 +16,7 @@ namespace NaturaStore.Services.Core
             _dbContext = dbContext;
         }
 
-        public async Task<int> CreateProducerAsync(CreateNewProducerViewModel model)
+        public async Task<Guid> CreateProducerAsync(CreateNewProducerViewModel model)  // Променено от int на Guid
         {
             var producer = new Producer
             {
@@ -38,7 +38,7 @@ namespace NaturaStore.Services.Core
             return await _dbContext.Producers.ToListAsync();
         }
 
-        public async Task<bool> ProducerExistsAsync(int producerId)
+        public async Task<bool> ProducerExistsAsync(Guid producerId)  // Променено от int на Guid
         {
             return await _dbContext.Producers.AnyAsync(p => p.Id == producerId);
         }

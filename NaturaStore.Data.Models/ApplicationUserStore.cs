@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace NaturaStore.Data.Models
 {
-    public class ApplicationUserStore : IdentityUser
+    public class ApplicationUserStore
     {
-        public string FirstName { get; set; } = null!;
+        public string ApplicationUserId { get; set; } = null!;
 
-        public string LastName { get; set; } = null!;
+        public virtual IdentityUser ApplicationUser { get; set; } = null!;
 
-        public string? Address { get; set; }
+        public Guid ProductId { get; set; }
+
+        public virtual Product Product { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
     }
 }

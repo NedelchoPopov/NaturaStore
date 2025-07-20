@@ -17,7 +17,7 @@ namespace NaturaStore.Services.Core
         public ProductService(IProductRepository productRepository, NaturaStoreDbContext dbContext)
         {
             _productRepository = productRepository;
-            _dbContext = dbContext; 
+            _dbContext = dbContext;
         }
 
         public async Task AddProductAsync(CreateProductViewModel inputModel)
@@ -34,16 +34,15 @@ namespace NaturaStore.Services.Core
             };
 
             await _productRepository.AddAsync(product);
-           
         }
 
         public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
         {
             var products = await _productRepository
-               .GetAllAttached()
-               .Include(p => p.Category)
-               .Include(p => p.Producer)
-               .ToListAsync();
+                .GetAllAttached()
+                .Include(p => p.Category)
+                .Include(p => p.Producer)
+                .ToListAsync();
 
             return products.Select(p => new ProductListViewModel
             {
@@ -56,7 +55,7 @@ namespace NaturaStore.Services.Core
             });
         }
 
-        public async Task<ProductDetailsViewModel?> GetProductByIdAsync(int id)
+        public async Task<ProductDetailsViewModel?> GetProductByIdAsync(Guid id)  // Променено от int на Guid
         {
             return await _dbContext.Products
                 .Include(p => p.Category)
@@ -75,7 +74,7 @@ namespace NaturaStore.Services.Core
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<EditProductViewModel?> GetProductForEditAsync(int id)
+        public async Task<EditProductViewModel?> GetProductForEditAsync(Guid id)  // Променено от int на Guid
         {
             var product = await _productRepository.GetByIdAsync(id);
             if (product == null) return null;
@@ -139,7 +138,7 @@ namespace NaturaStore.Services.Core
             return await _dbContext.Categories.ToListAsync();
         }
 
-        public async Task<DeleteProductViewModel?> GetProductForDeleteAsync(int id)
+        public async Task<DeleteProductViewModel?> GetProductForDeleteAsync(Guid id)  // Променено от int на Guid
         {
             var product = await _productRepository.GetByIdAsync(id);
             if (product == null) return null;
@@ -153,7 +152,7 @@ namespace NaturaStore.Services.Core
             };
         }
 
-        public async Task<bool> DeleteProductAsync(int id)
+        public async Task<bool> DeleteProductAsync(Guid id)  // Променено от int на Guid
         {
             var product = await _productRepository.GetByIdAsync(id);
             if (product == null)
