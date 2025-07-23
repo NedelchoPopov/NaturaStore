@@ -1,0 +1,17 @@
+﻿@using NaturaStore.Web.ViewModels.Order
+@model OrderDetailsViewModel
+
+<h2>Детайли за поръчка @Model.Id</h2>
+
+<div>
+    <h4>Дата на създаване: @Model.CreatedOn</h4>
+    <h5>Статус: @Model.Status</h5>
+
+    <h6>Продукти:</h6>
+    <ul>
+        @foreach (var item in Model.OrderItems)
+        {
+                <li>@item.ProductName - Количество: @item.Quantity, Цена: @item.Price</li>
+        }
+    </ul>
+</div>
