@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace NaturaStore.Data.Configuration
 {
     using static NaturaStore.Data.Common.EntityConstants.Product;
+    using static GCommon.ApplicationConstants;
 
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
@@ -34,15 +35,21 @@ namespace NaturaStore.Data.Configuration
 
             builder
                 .Property(p => p.CreatedOn)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql(DateCreatedSqlType);
+
+            builder.HasOne(p => p.Category)
+                   .WithMany(c => c.Products)
+                   .HasForeignKey(p => p.CategoryId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasOne(p => p.Producer)
-                .WithMany()
-                .HasForeignKey(p => p.ProducerId)
-                .OnDelete(DeleteBehavior.Restrict);
+                    .HasOne(p => p.Producer)
+                    .WithMany(pr => pr.Products)      
+                    .HasForeignKey(p => p.ProducerId) 
+                    .IsRequired()
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            
+
             builder
                 .Property(p => p.IsDeleted)
                 .IsRequired()

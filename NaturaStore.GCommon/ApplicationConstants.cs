@@ -12,5 +12,6 @@ namespace NaturaStore.GCommon
         public const string NoImageUrl = "no-image.jpg";
         public const string IsDeletedPropertyName = "IsDeleted";
         public const string PriceSqlType = "decimal(18, 6)";
+        public const string DateCreatedSqlType = "GETUTCDATE()";
     }
 }

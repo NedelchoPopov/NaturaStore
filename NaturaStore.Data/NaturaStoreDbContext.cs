@@ -25,6 +25,10 @@ namespace NaturaStore.Data
 
         public virtual DbSet<ApplicationUserStore> ApplicationUserStores { get; set; } = null!;
 
+        public virtual DbSet<Cart> Carts { get; set; } = null!;
+
+        public virtual DbSet<CartItem> CartItems { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

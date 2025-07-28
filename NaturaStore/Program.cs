@@ -39,6 +39,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 // Register seeders
 builder.Services.AddScoped<OrderSeeder>(); 
@@ -87,6 +89,6 @@ static async Task SeedDatabase(IApplicationBuilder app)
     await DbSeeder.SeedAsync(dbContext);
 
     // Seed orders if needed
-    var orderSeeder = app.ApplicationServices.GetRequiredService<OrderSeeder>();
-    await orderSeeder.SeedAsync(dbContext); 
+    var orderSeeder = scope.ServiceProvider.GetRequiredService<OrderSeeder>();
+    await orderSeeder.SeedAsync(dbContext);
 }

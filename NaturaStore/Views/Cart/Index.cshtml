@@ -1,0 +1,50 @@
+﻿@model NaturaStore.Web.ViewModels.Cart.CartViewModel
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!Model.Items.Any())
+{
+        <p>Your cart is empty.</p>
+        <a asp-controller="Product" asp-action="Index">Continue shopping</a>
+}
+else
+{
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Items)
+            {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price.ToString("C")</td>
+                        <td>@(item.Quantity * item.Price).ToString("C")</td>
+                        <td>
+                            <form asp-action="RemoveFromCart" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+            }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                    <td colspan="2">@Model.Total.ToString("C")</td>
+                </tr>
+            </tfoot>
+        </table>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-link">Continue shopping</a>
+}

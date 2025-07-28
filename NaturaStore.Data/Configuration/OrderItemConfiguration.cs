@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace NaturaStore.Data.Configuration
 {
+    using static GCommon.ApplicationConstants;
+
     public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
@@ -27,13 +29,14 @@ namespace NaturaStore.Data.Configuration
                    .HasForeignKey(oi => oi.ProductId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-           
+            builder.HasQueryFilter(oi => !oi.Product.IsDeleted);
+
             builder.Property(oi => oi.Quantity)
                    .IsRequired();
 
             
             builder.Property(oi => oi.Price)
-                   .HasColumnType("decimal(18,2)")
+                   .HasColumnType(PriceSqlType)
                    .IsRequired();
         }
     }

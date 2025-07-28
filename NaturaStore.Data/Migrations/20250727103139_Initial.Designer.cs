@@ -12,8 +12,8 @@ using NaturaStore.Data;
 namespace NaturaStore.Data.Migrations
 {
     [DbContext(typeof(NaturaStoreDbContext))]
-    [Migration("20250720141502_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250727103139_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -232,19 +232,63 @@ namespace NaturaStore.Data.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ApplicationUserId");
+                    b.HasKey("ApplicationUserId", "ProductId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("ApplicationUserStores");
+                });
+
+            modelBuilder.Entity("NaturaStore.Data.Models.Cart", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("NaturaStore.Data.Models.CartItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 6)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("NaturaStore.Data.Models.Category", b =>
@@ -279,7 +323,9 @@ namespace NaturaStore.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -305,7 +351,7 @@ namespace NaturaStore.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 6)");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -397,16 +443,11 @@ namespace NaturaStore.Data.Migrations
                     b.Property<Guid>("ProducerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProducerId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ProducerId");
-
-                    b.HasIndex("ProducerId1");
 
                     b.ToTable("Products");
                 });
@@ -467,7 +508,7 @@ namespace NaturaStore.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("NaturaStore.Data.Models.Product", "Product")
@@ -481,9 +522,37 @@ namespace NaturaStore.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("NaturaStore.Data.Models.Cart", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NaturaStore.Data.Models.CartItem", b =>
+                {
+                    b.HasOne("NaturaStore.Data.Models.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NaturaStore.Data.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("NaturaStore.Data.Models.Order", b =>
                 {
-                    b.HasOne("NaturaStore.Data.Models.ApplicationUserStore", "User")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -520,18 +589,19 @@ namespace NaturaStore.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("NaturaStore.Data.Models.Producer", "Producer")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("ProducerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("NaturaStore.Data.Models.Producer", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ProducerId1");
-
                     b.Navigation("Category");
 
                     b.Navigation("Producer");
+                });
+
+            modelBuilder.Entity("NaturaStore.Data.Models.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("NaturaStore.Data.Models.Category", b =>
