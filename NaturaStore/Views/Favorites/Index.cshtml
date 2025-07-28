@@ -1,0 +1,35 @@
+﻿@model NaturaStore.Web.ViewModels.Favorite.FavoriteListViewModel
+
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!Model.Items.Any())
+{
+        <p>You have no favorites yet.</p>
+        <a asp-controller="Product" asp-action="Index">Browse products</a>
+}
+else
+{
+        <div class="row">
+        @foreach (var p in Model.Items)
+        {
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <img src="@p.ImageUrl" class="card-img-top" alt="@p.Name" />
+                        <div class="card-body">
+                            <h5 class="card-title">@p.Name</h5>
+                            <p class="card-text">@p.Price.ToString("C")</p>
+                            <form asp-action="Remove" asp-controller="Favorites" method="post">
+                            @Html.AntiForgeryToken()
+                                <input type="hidden" name="productId" value="@p.ProductId" />
+                                <button class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        }
+        </div>
+}

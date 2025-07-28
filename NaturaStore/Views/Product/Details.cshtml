@@ -12,6 +12,13 @@
             <p><strong>Category:</strong> @Model.Category</p>
             <p><strong>Producer:</strong> @Model.Producer</p>
             <p><strong>Description:</strong> @Model.Description</p>
+
+           <form asp-action="Add" asp-controller="Favorites" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="productId" value="@Model.Id" />
+                <button type="submit" class="btn btn-primary">♥ Favorite</button>
+            </form>
+
             <a asp-action="Index" class="btn btn-secondary">Back to list</a>
         </div>
     </div>

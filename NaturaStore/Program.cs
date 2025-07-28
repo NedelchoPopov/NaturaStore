@@ -36,14 +36,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 // Register services
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddScoped<IProducerService, ProducerService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
-
-// Register seeders
-builder.Services.AddScoped<OrderSeeder>(); 
 
 builder.Services.AddControllersWithViews();
 
@@ -88,7 +87,4 @@ static async Task SeedDatabase(IApplicationBuilder app)
     var dbContext = scope.ServiceProvider.GetRequiredService<NaturaStoreDbContext>();
     await DbSeeder.SeedAsync(dbContext);
 
-    // Seed orders if needed
-    var orderSeeder = scope.ServiceProvider.GetRequiredService<OrderSeeder>();
-    await orderSeeder.SeedAsync(dbContext);
 }
