@@ -1,28 +1,38 @@
 ﻿@using NaturaStore.Web.Helpers
 @using NaturaStore.Web.ViewModels.Product
 
-@model IEnumerable<NaturaStore.Web.ViewModels.Product.ProductListViewModel>
+@model IEnumerable<ProductListViewModel>
 
 @{
-    ViewData["Title"] = "Продукти";
+    ViewData["Title"] = "Browse Products";
 }
 
 <div class="container mt-4">
+    @* Покажи съобщение при успешно добавяне *@
+    @if (TempData["CartMessage"] != null)
+    {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["CartMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    }
+
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="text-light fw-bold">Browse Products</h1>
+        <h1 class="text-dark fw-bold">@ViewData["Title"]</h1>
         <a asp-controller="Home" asp-action="Index" class="btn btn-secondary fw-bold">
             <i class="bi bi-arrow-left"></i> Back to Home Page
         </a>
     </div>
 
     <div class="d-flex flex-column gap-2">
-        @foreach (ProductListViewModel product in Model)
+        @foreach (var product in Model)
         {
-                <div class="card shadow-lg border-0 rounded-3 d-flex flex-row align-items-center p-2"
-                     style="height: 140px; max-height: 140px;">
-                        <img src="@ImageHelper.GetValidImageUrl(product.ImageUrl)" class="rounded"
-                         alt="@product.Name"
-                         style="width: 100px; height: 130px; object-fit: cover;">
+                <div class="card shadow-lg border-0 rounded-3 d-flex flex-row align-items-center p-2" style="height: 140px; max-height: 140px;">
+                    <img src="@ImageHelper.GetValidImageUrl(product.ImageUrl)" 
+                         class="rounded" 
+                         alt="@product.Name" 
+                         style="width: 100px; height: 130px; object-fit: cover;" />
+
                     <div class="card-body ms-3 p-2 text-dark" style="flex-grow: 1;">
                         <h6 class="fw-bold mb-1">@product.Name</h6>
                         <p class="text-muted mb-0" style="font-size: 0.85rem;">
@@ -33,21 +43,47 @@
                             <strong>Price:</strong> @product.Price лв.
                         </p>
                     </div>
+
                     <div class="me-3">
-                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"
-                           class="btn btn-primary btn-sm rounded-pill px-4 fw-bold">
+                        <a asp-controller="Product" 
+                           asp-action="Details" 
+                           asp-route-id="@product.Id"
+                           class="btn btn-primary btn-sm rounded-pill px-4 fw-bold mb-1">
                             View Details
                         </a>
-                         <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"
-                             class="btn btn-warning btn-sm rounded-pill px-4 fw-bold">
-                              Edit
-                        </a>
-                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
-                               class="btn btn-danger btn-sm rounded-pill px-4 fw-bold">
-                                Delete
-                            </a>
-                    </div>
+                             <form asp-controller="Cart"
+                                  asp-action="AddToCart"
+                                  method="post"
+                                  class="d-inline">
+                                            @Html.AntiForgeryToken()
 
+                                <input type="hidden" name="productId" value="@product.Id" />
+                                <input type="number" name="quantity" value="1" min="1"
+                                       class="form-control d-inline-block"
+                                       style="width: 60px; vertical-align: middle;" />
+
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    🛒 Add to Cart
+                                </button>
+                            </form>
+
+                    @* Показва се само за администратори *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                                <a asp-controller="Product" 
+                                   asp-action="Edit" 
+                                   asp-route-id="@product.Id"
+                                   class="btn btn-warning btn-sm rounded-pill px-4 fw-bold ms-2">
+                                    Edit
+                                </a>
+                                <a asp-controller="Product" 
+                                   asp-action="Delete" 
+                                   asp-route-id="@product.Id"
+                                   class="btn btn-danger btn-sm rounded-pill px-4 fw-bold ms-2">
+                                    Delete
+                                </a>
+                    }
+                    </div>
                 </div>
         }
     </div>

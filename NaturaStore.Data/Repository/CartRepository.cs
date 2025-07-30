@@ -1,54 +1,55 @@
-﻿namespace NaturaStore.Data.Repository
-{
-    using NaturaStore.Data.Models;
-    using NaturaStore.Data.Repository.Interfaces;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿//using Microsoft.EntityFrameworkCore;
+//using NaturaStore.Data;
+//using NaturaStore.Data.Models;
+//using NaturaStore.Data.Repository.Interfaces;
+//using System.Threading.Tasks;
 
-    public class CartRepository : BaseRepository<Cart, Guid>, ICartRepository
-    {
-        public CartRepository(NaturaStoreDbContext dbContext)
-            : base(dbContext)
-        {
-        }
+//namespace NaturaStore.Data.Repository
+//{
+//    public class CartRepository : ICartRepository
+//    {
+//        private readonly NaturaStoreDbContext _db;
+//        public CartRepository(NaturaStoreDbContext db) => _db = db;
 
+//        public async Task<Cart?> GetCartByUserIdAsync(string userId)
+//        {
+//            return await _db.Carts
+//                .Include(c => c.Items)
+//                    .ThenInclude(ci => ci.Product)
+//                .FirstOrDefaultAsync(c => c.UserId == userId);
+//        }
 
-        public async Task<Cart> GetCartByUserIdAsync(string userId)
-        {
-            var cart = await this.DbContext.Carts
-                .FirstOrDefaultAsync(c => c.UserId == userId);
-            return cart ?? new Cart { Id = Guid.NewGuid(), UserId = userId }; // Връщаме нова количка, ако не е намерена
-        }
+//        public async Task<bool> AddAsync(Cart cart)
+//        {
+//            try
+//            {
+//                await _db.Carts.AddAsync(cart);
+//                await _db.SaveChangesAsync();
+//                return true;
+//            }
+//            catch
+//            {
+//                return false;
+//            }
+//        }
 
-        public async Task<bool> AddItemToCartAsync(Guid cartId, CartItem cartItem)
-        {
-            await this.DbContext.CartItems.AddAsync(cartItem);
-            return await this.SaveChangesAsync() > 0; // Проверяваме дали записът е успешен
-        }
-
-        public async Task<bool> RemoveItemFromCartAsync(Guid cartId, Guid productId)
-        {
-            var cartItem = await this.DbContext.CartItems
-                .FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ProductId == productId);
-
-            if (cartItem == null)
-                return false;
-
-            this.DbContext.CartItems.Remove(cartItem);
-            return await this.SaveChangesAsync() > 0; // Проверяваме дали премахването е успешно
-        }
-        public async Task<CartItem> GetCartItemAsync(Guid cartId, Guid productId)
-        {
-            return await this.DbContext.CartItems
-                .FirstOrDefaultAsync(ci => ci.CartId == cartId && ci.ProductId == productId);
-        }
-
-        // Метод за запазване на промените в базата
-        public async Task<int> SaveChangesAsync()
-        {
-            return await this.DbContext.SaveChangesAsync();
-        }
-    }
-}
+//        public async Task<bool> UpdateAsync(Cart cart)
+//        {
+//            try
+//            {
+//                // Ако е детачнат, прикачаме, после SaveChanges
+//                if (_db.Entry(cart).State == EntityState.Detached)
+//                {
+//                    _db.Carts.Attach(cart);
+//                    _db.Entry(cart).State = EntityState.Modified;
+//                }
+//                await _db.SaveChangesAsync();
+//                return true;
+//            }
+//            catch
+//            {
+//                return false;
+//            }
+//        }
+//    }
+//}

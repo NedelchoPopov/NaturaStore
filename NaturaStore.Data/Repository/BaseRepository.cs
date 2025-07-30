@@ -163,16 +163,10 @@ namespace NaturaStore.Data.Repository
         {
             try
             {
-                this.DbSet.Attach(item);
-                this.DbSet.Entry(item).State = EntityState.Modified;
                 await this.DbContext.SaveChangesAsync();
-
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            catch { return false; }
         }
 
         public void SaveChanges()

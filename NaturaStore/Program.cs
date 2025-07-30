@@ -7,19 +7,19 @@ using NaturaStore.Data.Seeding;
 using NaturaStore.Services.Core;
 using NaturaStore.Services.Core.Interfaces;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// 1) Add services to the container.
 
+// — EF Core
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<NaturaStoreDbContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
-
+    options.UseSqlServer(connectionString)
+);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// — Identity
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -33,22 +33,35 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
 .AddEntityFrameworkStores<NaturaStoreDbContext>();
 
-// Register services
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(1);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// 2) Register Repositories & Services
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
 builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+
 builder.Services.AddScoped<IProducerService, ProducerService>();
+
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<ICartService, CartService>();
+
+//builder.Services.AddScoped<ICartRepository, CartRepository>();
+//builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartService, SessionCartService>();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 3) Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -61,6 +74,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 await SeedDatabase(app);
 
@@ -68,14 +82,18 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Map area routes
 app.MapAreaControllerRoute(
     name: "AdminArea",
     areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+);
 
+// Default MVC route
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.MapRazorPages();
 
@@ -86,5 +104,4 @@ static async Task SeedDatabase(IApplicationBuilder app)
     using var scope = app.ApplicationServices.CreateScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<NaturaStoreDbContext>();
     await DbSeeder.SeedAsync(dbContext);
-
 }

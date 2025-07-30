@@ -1,45 +1,53 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// Web/Controllers/CartController.cs
+using Microsoft.AspNetCore.Mvc;
 using NaturaStore.Services.Core.Interfaces;
 using NaturaStore.Web.ViewModels.Cart;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using NaturaStore.Data.Repository.Interfaces;
 
 namespace NaturaStore.Web.Controllers
 {
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
+        private readonly IProductRepository _prodRepo;
 
-        public CartController(ICartService cartService)
-            => _cartService = cartService;
-
-        // GET: /Cart
-        public async Task<IActionResult> Index()
+        public CartController(ICartService cartService, IProductRepository prodRepo)
         {
-            // взимаме userId (можеш да ползваш ClaimTypes.NameIdentifier ако не ползваш UserName за ID)
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var model = await _cartService.GetCartAsync(userId);
-            return View(model);
+            _cartService = cartService;
+            _prodRepo = prodRepo;
         }
 
-        // POST: /Cart/AddToCart
-        [HttpPost]
-        public async Task<IActionResult> AddToCart(Guid productId)
+        // GET /Cart
+        [HttpGet]
+        public IActionResult Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var ok = await _cartService.AddToCartAsync(userId, productId);
-            if (!ok) return NotFound();
+            var vm = _cartService.GetCart(HttpContext);
+            return View(vm);
+        }
+
+        // POST /Cart/AddToCart
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(Guid productId, int quantity)
+        {
+            var product = await _prodRepo.GetByIdAsync(productId);
+            if (product != null)
+                _cartService.AddToCart(HttpContext, product, quantity);
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: /Cart/RemoveFromCart
+        // POST /Cart/UpdateQuantity
         [HttpPost]
-        public async Task<IActionResult> RemoveFromCart(Guid productId)
+        public IActionResult UpdateQuantity(Guid productId, int quantity)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var ok = await _cartService.RemoveFromCartAsync(userId, productId);
-            if (!ok) return NotFound();
+            _cartService.UpdateQuantity(HttpContext, productId, quantity);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST /Cart/Remove
+        [HttpPost]
+        public IActionResult Remove(Guid productId)
+        {
+            _cartService.RemoveFromCart(HttpContext, productId);
             return RedirectToAction(nameof(Index));
         }
     }

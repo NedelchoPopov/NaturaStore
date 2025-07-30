@@ -1,13 +1,16 @@
-﻿namespace NaturaStore.Services.Core.Interfaces
-{
-    using NaturaStore.Data.Models;
-    using System;
-    using System.Threading.Tasks;
+﻿using NaturaStore.Data.Models;
+using Microsoft.AspNetCore.Http;
+using NaturaStore.Web.ViewModels.Cart;
+using System;
+using System.Threading.Tasks;
 
+namespace NaturaStore.Services.Core.Interfaces
+{
     public interface ICartService
     {
-        Task<Cart> GetCartAsync(string userId);
-        Task<bool> AddToCartAsync(string userId, Guid productId);
-        Task<bool> RemoveFromCartAsync(string userId, Guid productId);
+        CartViewModel GetCart(HttpContext httpContext);
+        void AddToCart(HttpContext httpContext, Product product, int quantity);
+        void UpdateQuantity(HttpContext httpContext, Guid productId, int quantity);
+        void RemoveFromCart(HttpContext httpContext, Guid productId);
     }
 }
