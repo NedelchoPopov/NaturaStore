@@ -8,9 +8,11 @@ namespace NaturaStore.Services.Core.Interfaces
 {
     public interface ICartService
     {
-        CartViewModel GetCart(HttpContext httpContext);
-        void AddToCart(HttpContext httpContext, Product product, int quantity);
-        void UpdateQuantity(HttpContext httpContext, Guid productId, int quantity);
-        void RemoveFromCart(HttpContext httpContext, Guid productId);
+        CartViewModel GetCart(HttpContext ctx);
+        void AddToCart(HttpContext ctx, Product p, int qty);
+        void RemoveFromCart(HttpContext ctx, Guid productId);
+        void UpdateQuantity(HttpContext ctx, Guid productId, int quantity);
+        void ClearCart(HttpContext ctx);
+        
     }
 }

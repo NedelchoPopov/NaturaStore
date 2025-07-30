@@ -72,6 +72,11 @@ namespace NaturaStore.Services.Core
             SaveCart(ctx, cart);
         }
 
+        public void ClearCart(HttpContext ctx)
+        {
+            ctx.Session.Remove(SessionKey);
+        }
+
         private void SaveCart(HttpContext ctx, CartViewModel cart)
         {
             var json = JsonConvert.SerializeObject(cart);

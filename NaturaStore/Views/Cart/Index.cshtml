@@ -54,5 +54,11 @@ else
             </tfoot>
         </table>
         <a asp-controller="Product" asp-action="Index" class="btn btn-secondary">Continue shopping</a>
-        <a asp-controller="Order" asp-action="Checkout" class="btn btn-success">Checkout</a>
+                <form asp-controller="Orders"
+          asp-action="Checkout"
+          method="get">
+      <button type="submit" class="btn btn-success">
+        Proceed to Checkout
+      </button>
+    </form>
 }

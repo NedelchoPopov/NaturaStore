@@ -10,29 +10,24 @@ namespace NaturaStore.Data.Repository
 {
     public class OrderRepository : BaseRepository<Order, Guid>, IOrderRepository
     {
-        private readonly NaturaStoreDbContext _dbContext;
+        public OrderRepository(NaturaStoreDbContext db) : base(db) { }
 
-        public OrderRepository(NaturaStoreDbContext dbContext)
-            : base(dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        
         public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(string userId)
         {
-            return await _dbContext.Orders
-                .Where(o => o.UserId == userId)
+            return await this.DbContext.Orders
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .Where(o => o.UserId == userId && !o.IsDeleted)
+                .OrderByDescending(o => o.CreatedOn)
                 .ToListAsync();
         }
 
-        
-        public async Task<Order?> GetOrderWithItemsAsync(Guid orderId)
+        public async Task<Order> GetOrderWithItemsAsync(Guid id)
         {
-            return await _dbContext.Orders
+            return await this.DbContext.Orders
                 .Include(o => o.OrderItems)
-                .ThenInclude(oi => oi.Product)
-                .FirstOrDefaultAsync(o => o.Id == orderId);
+                    .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.Id == id && !o.IsDeleted);
         }
     }
 }

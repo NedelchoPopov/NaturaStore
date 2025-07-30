@@ -9,51 +9,15 @@ namespace NaturaStore.Services.Core
 {
     public class OrderService : IOrderService
     {
-        private readonly IOrderRepository _orderRepository;
-        private readonly IProductRepository _productRepository;
+        private readonly IOrderRepository _orderRepo;
+        private readonly IProductRepository _prodRepo;
+        private readonly ICartService _cartService;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
+        public OrderService(IOrderRepository orderRepo, IProductRepository prodRepo, ICartService cartService)
         {
-            _orderRepository = orderRepository;
-            _productRepository = productRepository;
-        }
-
-        public async Task<IEnumerable<OrderListViewModel>> GetAllOrdersAsync()
-        {
-            var orders = await _orderRepository.GetAllAsync();
-
-            return orders
-                .Select(o => new OrderListViewModel
-                {
-                    Id = o.Id,
-                    // Взимаме UserName директно от IdentityUser
-                    UserName = o.User.UserName!,
-                    CreatedOn = o.CreatedOn,
-                    Status = o.Status.ToString()
-                })
-                .ToList();
-        }
-
-        public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(Guid id)
-        {
-            var order = await _orderRepository.GetOrderWithItemsAsync(id);
-            if (order == null)
-                return null;
-
-            return new OrderDetailsViewModel
-            {
-                Id = order.Id,
-                CreatedOn = order.CreatedOn,
-                Status = order.Status.ToString(),
-                OrderItems = order.OrderItems
-                    .Select(oi => new OrderItemDetailsViewModel
-                    {
-                        ProductName = oi.Product.Name,
-                        Quantity = oi.Quantity,
-                        Price = oi.Price
-                    })
-                    .ToList()
-            };
+            _orderRepo = orderRepo;
+            _prodRepo = prodRepo;
+            _cartService = cartService;
         }
 
         public async Task<bool> CreateOrderAsync(OrderCreateViewModel model)
@@ -63,50 +27,78 @@ namespace NaturaStore.Services.Core
                 Id = Guid.NewGuid(),
                 CreatedOn = DateTime.UtcNow,
                 UserId = model.UserId,
-                Status = Enum.Parse<OrderStatus>(model.Status.ToString())
+                Status = OrderStatus.Pending  // по подразбиране
             };
 
-            foreach (var productId in model.ProductIds)
+            foreach (var itm in model.Items)
             {
-                var product = await _productRepository.GetByIdAsync(productId);
-                if (product != null)
+                var prod = await _prodRepo.GetByIdAsync(itm.ProductId);
+                if (prod == null) continue;
+
+                order.OrderItems.Add(new OrderItem
                 {
-                    var orderItem = new OrderItem
-                    {
-                        Id = Guid.NewGuid(),
-                        ProductId = product.Id,
-                        Quantity = 1,
-                        Price = product.Price
-                    };
-                    order.OrderItems.Add(orderItem);
-                }
+                    Id = Guid.NewGuid(),
+                    ProductId = prod.Id,
+                    Quantity = itm.Quantity,
+                    Price = prod.Price
+                });
             }
 
-            await _orderRepository.AddAsync(order);
+            await _orderRepo.AddAsync(order);
             return true;
         }
+
+        public async Task<IEnumerable<OrderListViewModel>> GetAllOrdersAsync()
+        {
+            var orders = await _orderRepo.GetAllAsync();
+            return orders.Select(o => new OrderListViewModel
+            {
+                Id = o.Id,
+                CreatedOn = o.CreatedOn,
+                Status = o.Status.ToString()
+            });
+        }
+
+        public async Task<IEnumerable<OrderListViewModel>> GetUserOrdersAsync(string userId)
+        {
+            var all = await _orderRepo.GetAllAsync();
+            return all
+                .Where(o => o.UserId == userId)
+                .Select(o => new OrderListViewModel
+                {
+                    Id = o.Id,
+                    CreatedOn = o.CreatedOn,
+                    Status = o.Status.ToString()
+                });
+        }
+
+        public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(Guid id)
+        {
+            var o = await _orderRepo.GetOrderWithItemsAsync(id);
+            if (o == null) return null;
+
+            return new OrderDetailsViewModel
+            {
+                Id = o.Id,
+                CreatedOn = o.CreatedOn,
+                Status = o.Status.ToString(),
+                Items = o.OrderItems.Select(oi => new OrderItemDetailsViewModel
+                {
+                    ProductName = oi.Product.Name,
+                    Quantity = oi.Quantity,
+                    Price = oi.Price
+                }).ToList()
+            };
+        }
+
 
         public async Task<bool> DeleteOrderAsync(Guid id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null) return false;
-
-            order.IsDeleted = true;
-            await _orderRepository.UpdateAsync(order);
+            var o = await _orderRepo.GetByIdAsync(id);
+            if (o == null) return false;
+            o.IsDeleted = true;
+            await _orderRepo.UpdateAsync(o);
             return true;
-        }
-
-        public async Task<OrderDeleteViewModel?> GetOrderForDeleteAsync(Guid id)
-        {
-            var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null) return null;
-
-            return new OrderDeleteViewModel
-            {
-                Id = order.Id,
-                CreatedOn = order.CreatedOn,
-                Status = order.Status.ToString()
-            };
         }
     }
 }

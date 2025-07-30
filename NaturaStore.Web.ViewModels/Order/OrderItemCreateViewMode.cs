@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace NaturaStore.Web.ViewModels.Order
 {
-    public class OrderDeleteViewModel
+    public class OrderItemCreateViewModel
     {
-        public Guid Id { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public string Status { get; set; } = null!;
+        public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using NaturaStore.Data.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,7 @@ namespace NaturaStore.Web.ViewModels.Order
     public class OrderCreateViewModel
     {
         public string UserId { get; set; } = null!;
-
-        public List<Guid> ProductIds { get; set; } = new List<Guid>();
-
-        public int Status { get; set; } = 0;
-
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-
-        public IEnumerable<SelectListItem> Products { get; set; } = new List<SelectListItem>();
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public List<OrderItemCreateViewModel> Items { get; set; } = new();
     }
 }

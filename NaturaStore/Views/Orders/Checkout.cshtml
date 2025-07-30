@@ -1,0 +1,49 @@
+﻿@model NaturaStore.Web.ViewModels.Order.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1>Checkout</h1>
+
+@if (TempData["Error"] != null)
+{
+        <div class="alert alert-warning">@TempData["Error"]</div>
+}
+
+<form asp-action="Checkout" method="post">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-end">Unit Price</th>
+                <th class="text-end">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td class="text-center">@item.Quantity</td>
+                        <td class="text-end">@item.UnitPrice.ToString("лв")</td>
+                        <td class="text-end">@item.Subtotal.ToString("лв")</td>
+                    </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                <td class="text-end"><strong>@Model.GrandTotal.ToString("C")</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button type="submit" class="btn btn-primary">
+        Confirm Order
+    </button>
+    <a asp-controller="Cart" asp-action="Index" class="btn btn-secondary ms-2">
+        Back to Cart
+    </a>
+</form>

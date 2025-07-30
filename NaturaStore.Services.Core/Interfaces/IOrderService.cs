@@ -9,10 +9,11 @@ namespace NaturaStore.Services.Core.Interfaces
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderListViewModel>> GetAllOrdersAsync();
-        Task<OrderDetailsViewModel?> GetOrderDetailsAsync(Guid id);
         Task<bool> CreateOrderAsync(OrderCreateViewModel model);
+        Task<IEnumerable<OrderListViewModel>> GetAllOrdersAsync();
+        Task<IEnumerable<OrderListViewModel>> GetUserOrdersAsync(string userId);
+        Task<OrderDetailsViewModel?> GetOrderDetailsAsync(Guid id);
         Task<bool> DeleteOrderAsync(Guid id);
-        Task<OrderDeleteViewModel?> GetOrderForDeleteAsync(Guid id);
+        
     }
 }
