@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NaturaStore.Services.Core.Interfaces;
 using NaturaStore.Web.ViewModels.Producer;
 
 namespace NaturaStore.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProducerController : Controller
     {
         private readonly IProducerService _producerService;

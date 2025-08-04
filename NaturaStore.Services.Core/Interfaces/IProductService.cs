@@ -9,13 +9,13 @@ namespace NaturaStore.Services.Core.Interfaces
         IQueryable<Product> QueryAll();
         Task AddProductAsync(CreateProductViewModel inputModel);
         Task<IEnumerable<ProductItemViewModel>> GetAllProductsAsync();
-        Task<ProductDetailsViewModel?> GetProductByIdAsync(Guid id);  // Променено от int на Guid
-        Task<EditProductViewModel?> GetProductForEditAsync(Guid id);  // Променено от int на Guid
+        Task<ProductDetailsViewModel?> GetProductByIdAsync(Guid id); 
+        Task<EditProductViewModel?> GetProductForEditAsync(Guid id);  
         Task<bool> UpdateAsync(EditProductViewModel model);
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetProducersAsync();
-        Task<DeleteProductViewModel?> GetProductForDeleteAsync(Guid id);  // Променено от int на Guid
-        Task<bool> DeleteProductAsync(Guid id);  // Променено от int на Guid
+        Task<DeleteProductViewModel?> GetProductForDeleteAsync(Guid id);  
+        Task<bool> DeleteProductAsync(Guid id);  
     }
 }

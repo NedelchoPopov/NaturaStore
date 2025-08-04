@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NaturaStore.Services.Core.Interfaces;
@@ -6,6 +7,7 @@ using NaturaStore.Web.ViewModels.Product;
 
 namespace NaturaStore.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -65,12 +67,6 @@ namespace NaturaStore.Web.Controllers
         }
 
         [HttpGet]
-        //public async Task<IActionResult> Index()
-        //{
-        //    var products = await _productService.GetAllProductsAsync();
-        //    return View(products);
-        //}
-
         public async Task<IActionResult> Index(string? searchTerm, int page = 1, int pageSize = 10)
         {
             var query = _productService.QueryAll();

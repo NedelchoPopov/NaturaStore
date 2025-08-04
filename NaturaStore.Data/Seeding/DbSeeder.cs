@@ -10,6 +10,7 @@ namespace NaturaStore.Data.Seeding
             await CategorySeeder.SeedAsync(context);
             await ProducerSeeder.SeedAsync(context);
             await ProductSeeder.SeedAsync(context);
+            
         }
     }
 }
