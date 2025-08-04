@@ -4,7 +4,7 @@
     ViewData["Title"] = "Checkout";
 }
 
-<h1>Checkout</h1>
+<h1>@ViewData["Title"]</h1>
 
 @if (TempData["Error"] != null)
 {
@@ -24,26 +24,22 @@
         <tbody>
             @foreach (var item in Model.Items)
             {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td class="text-center">@item.Quantity</td>
-                        <td class="text-end">@item.UnitPrice.ToString("лв")</td>
-                        <td class="text-end">@item.Subtotal.ToString("лв")</td>
-                    </tr>
+                <tr>
+                    <td>@item.Name</td>
+                    <td class="text-center">@item.Quantity</td>
+                    <td>@($"{item.UnitPrice:F2} лв.")</td>
+                    <td>@($"{item.Subtotal:F2} лв.")</td>
+                </tr>
             }
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                <td class="text-end"><strong>@Model.GrandTotal.ToString("C")</strong></td>
+                <td class="text-end"><strong>@($"{Model.GrandTotal:F2} лв.")</strong></td>
             </tr>
         </tfoot>
     </table>
 
-    <button type="submit" class="btn btn-primary">
-        Confirm Order
-    </button>
-    <a asp-controller="Cart" asp-action="Index" class="btn btn-secondary ms-2">
-        Back to Cart
-    </a>
+    <button type="submit" class="btn btn-primary">Confirm Order</button>
+    <a asp-controller="Cart" asp-action="Index" class="btn btn-secondary ms-2">Back to Cart</a>
 </form>

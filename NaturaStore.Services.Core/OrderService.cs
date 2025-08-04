@@ -3,7 +3,6 @@ using NaturaStore.Services.Core.Interfaces;
 using NaturaStore.Data.Repository.Interfaces;
 using NaturaStore.Web.ViewModels.Order;
 using NaturaStore.Data.Common.Enums;
-using Microsoft.AspNetCore.Identity;
 
 namespace NaturaStore.Services.Core
 {

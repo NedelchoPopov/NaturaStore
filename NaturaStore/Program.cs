@@ -6,6 +6,7 @@ using NaturaStore.Data.Repository;
 using NaturaStore.Data.Seeding;
 using NaturaStore.Services.Core;
 using NaturaStore.Services.Core.Interfaces;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 

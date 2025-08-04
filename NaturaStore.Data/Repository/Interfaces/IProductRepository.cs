@@ -10,5 +10,6 @@ namespace NaturaStore.Data.Repository.Interfaces
     public interface IProductRepository
         : IRepository<Product, Guid>, IAsyncRepository<Product, Guid>
     {
+        IQueryable<Product> AllAsQueryable();
     }
 }

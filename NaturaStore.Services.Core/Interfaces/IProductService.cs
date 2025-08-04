@@ -6,8 +6,9 @@ namespace NaturaStore.Services.Core.Interfaces
 {
     public interface IProductService
     {
+        IQueryable<Product> QueryAll();
         Task AddProductAsync(CreateProductViewModel inputModel);
-        Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync();
+        Task<IEnumerable<ProductItemViewModel>> GetAllProductsAsync();
         Task<ProductDetailsViewModel?> GetProductByIdAsync(Guid id);  // Променено от int на Guid
         Task<EditProductViewModel?> GetProductForEditAsync(Guid id);  // Променено от int на Guid
         Task<bool> UpdateAsync(EditProductViewModel model);

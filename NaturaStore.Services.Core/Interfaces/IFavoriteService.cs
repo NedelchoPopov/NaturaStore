@@ -7,7 +7,7 @@ namespace NaturaStore.Services.Core.Interfaces
 {
     public interface IFavoriteService
     {
-        Task<IEnumerable<ProductListViewModel>> GetFavoritesAsync(string userId);
+        Task<IEnumerable<ProductItemViewModel>> GetFavoritesAsync(string userId);
         Task<bool> AddToFavoritesAsync(string userId, Guid productId);
         Task<bool> RemoveFromFavoritesAsync(string userId, Guid productId);
     }

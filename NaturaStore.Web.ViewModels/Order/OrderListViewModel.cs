@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NaturaStore.Web.ViewModels.Order
+﻿namespace NaturaStore.Web.ViewModels.Order
 {
     public class OrderListViewModel
     {

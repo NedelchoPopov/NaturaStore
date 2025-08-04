@@ -1,14 +1,14 @@
 ﻿@using NaturaStore.Web.Helpers
 @using NaturaStore.Web.ViewModels.Product
 
-@model IEnumerable<ProductListViewModel>
+@model ProductListViewModel
 
 @{
     ViewData["Title"] = "Browse Products";
 }
 
 <div class="container mt-4">
-    @* Покажи съобщение при успешно добавяне *@
+    @* Уведомление при добавяне в количка *@
     @if (TempData["CartMessage"] != null)
     {
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -17,17 +17,28 @@
             </div>
     }
 
+    @* Форма за търсене *@
+    <form method="get" asp-action="Index" class="mb-3 d-flex align-items-center">
+        <input type="text"
+               name="searchTerm"
+               value="@Model.SearchTerm"
+               placeholder="Search products…"
+               class="form-control me-2"
+               style="width:200px" />
+        <button type="submit" class="btn btn-primary">🔍 Search</button>
+    </form>
+
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="text-dark fw-bold">@ViewData["Title"]</h1>
         <a asp-controller="Home" asp-action="Index" class="btn btn-secondary fw-bold">
-            <i class="bi bi-arrow-left"></i> Back to Home Page
+            <i class="bi bi-arrow-left"></i> Back to Home
         </a>
     </div>
 
     <div class="d-flex flex-column gap-2">
-        @foreach (var product in Model)
+        @foreach (var product in Model.Items)
         {
-                <div class="card shadow-lg border-0 rounded-3 d-flex flex-row align-items-center p-2" style="height: 140px; max-height: 140px;">
+                <div class="card shadow-lg border-0 rounded-3 d-flex flex-row align-items-center p-2" style="height: 140px;">
                     <img src="@ImageHelper.GetValidImageUrl(product.ImageUrl)" 
                          class="rounded" 
                          alt="@product.Name" 
@@ -44,47 +55,77 @@
                         </p>
                     </div>
 
-                    <div class="me-3">
+                    <div class="me-3 d-flex flex-column">
                         <a asp-controller="Product" 
                            asp-action="Details" 
                            asp-route-id="@product.Id"
                            class="btn btn-primary btn-sm rounded-pill px-4 fw-bold mb-1">
                             View Details
                         </a>
-                             <form asp-controller="Cart"
-                                  asp-action="AddToCart"
-                                  method="post"
-                                  class="d-inline">
-                                            @Html.AntiForgeryToken()
 
-                                <input type="hidden" name="productId" value="@product.Id" />
-                                <input type="number" name="quantity" value="1" min="1"
-                                       class="form-control d-inline-block"
-                                       style="width: 60px; vertical-align: middle;" />
+                        <form asp-controller="Cart"
+                              asp-action="AddToCart"
+                              method="post"
+                              class="d-flex align-items-center mb-1">
+                        @Html.AntiForgeryToken()
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="number" name="quantity" value="1" min="1"
+                                   class="form-control me-2"
+                                   style="width: 60px;" />
+                            <button type="submit" class="btn btn-success btn-sm">
+                                🛒 Add to Cart
+                            </button>
+                        </form>
 
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    🛒 Add to Cart
-                                </button>
-                            </form>
-
-                    @* Показва се само за администратори *@
+                    @* Административни линкове *@
                     @if (User.IsInRole("Admin"))
                     {
-                                <a asp-controller="Product" 
-                                   asp-action="Edit" 
-                                   asp-route-id="@product.Id"
-                                   class="btn btn-warning btn-sm rounded-pill px-4 fw-bold ms-2">
-                                    Edit
-                                </a>
-                                <a asp-controller="Product" 
-                                   asp-action="Delete" 
-                                   asp-route-id="@product.Id"
-                                   class="btn btn-danger btn-sm rounded-pill px-4 fw-bold ms-2">
-                                    Delete
-                                </a>
+                                <div class="mt-1">
+                                    <a asp-controller="Product" 
+                                       asp-action="Edit" 
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-warning btn-sm rounded-pill px-3 fw-bold me-1">
+                                        Edit
+                                    </a>
+                                    <a asp-controller="Product" 
+                                       asp-action="Delete" 
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-danger btn-sm rounded-pill px-3 fw-bold">
+                                        Delete
+                                    </a>
+                                </div>
                     }
                     </div>
                 </div>
         }
     </div>
+
+    @* Пагинация *@
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center mb-0">
+        <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+          <a class="page-link"
+             asp-action="Index"
+             asp-route-page="@(Model.PageNumber-1)"
+             asp-route-searchTerm="@Model.SearchTerm">Previous</a>
+        </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+              <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-searchTerm="@Model.SearchTerm">@i</a>
+              </li>
+            }
+
+        <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+          <a class="page-link"
+             asp-action="Index"
+             asp-route-page="@(Model.PageNumber+1)"
+             asp-route-searchTerm="@Model.SearchTerm">Next</a>
+        </li>
+      </ul>
+    </nav>
 </div>

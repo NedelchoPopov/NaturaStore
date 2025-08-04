@@ -2,6 +2,7 @@
 
 namespace NaturaStore.Data.Repository
 {
+    using Microsoft.EntityFrameworkCore;
     using NaturaStore.Data;
     using NaturaStore.Data.Models;
     using NaturaStore.Data.Repository;
@@ -13,5 +14,13 @@ namespace NaturaStore.Data.Repository
             : base(dbContext)
         {
         }
+
+        public IQueryable<Product> AllAsQueryable()
+            => this.DbContext.Products
+                     .AsNoTracking()
+                     .Include(p => p.Category)
+                     .Include(p => p.Producer);
     }
 }
+    
+

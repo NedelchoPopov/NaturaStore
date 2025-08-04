@@ -16,11 +16,11 @@ namespace NaturaStore.Services.Core
             _prodService = prodService;
         }
 
-        public async Task<IEnumerable<ProductListViewModel>> GetFavoritesAsync(string userId)
+        public async Task<IEnumerable<ProductItemViewModel>> GetFavoritesAsync(string userId)
         {
             var favs = await _favRepo.GetAllByUserAsync(userId);
             
-            return favs.Select(f => new ProductListViewModel
+            return favs.Select(f => new ProductItemViewModel
             {
                 Id = f.ProductId,
                 Name = f.Product.Name,

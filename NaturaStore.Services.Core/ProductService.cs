@@ -20,6 +20,9 @@ namespace NaturaStore.Services.Core
             _dbContext = dbContext;
         }
 
+        public IQueryable<Product> QueryAll()
+            => _productRepository.AllAsQueryable();
+
         public async Task AddProductAsync(CreateProductViewModel inputModel)
         {
             var product = new Product
@@ -36,7 +39,7 @@ namespace NaturaStore.Services.Core
             await _productRepository.AddAsync(product);
         }
 
-        public async Task<IEnumerable<ProductListViewModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductItemViewModel>> GetAllProductsAsync()
         {
             var products = await _productRepository
                 .GetAllAttached()
@@ -44,7 +47,7 @@ namespace NaturaStore.Services.Core
                 .Include(p => p.Producer)
                 .ToListAsync();
 
-            return products.Select(p => new ProductListViewModel
+            return products.Select(p => new ProductItemViewModel
             {
                 Id = p.Id,
                 Name = p.Name,

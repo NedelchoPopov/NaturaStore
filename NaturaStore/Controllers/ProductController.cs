@@ -65,11 +65,47 @@ namespace NaturaStore.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var products = await _productService.GetAllProductsAsync();
+        //    return View(products);
+        //}
+
+        public async Task<IActionResult> Index(string? searchTerm, int page = 1, int pageSize = 10)
         {
-            var products = await _productService.GetAllProductsAsync();
-            return View(products);
+            var query = _productService.QueryAll();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(searchTerm));
+            }
+
+            var totalItems = await query.CountAsync();
+            var products = await query
+                .OrderBy(p => p.Name)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var vm = new ProductListViewModel
+            {
+                Items = products.Select(p => new ProductItemViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Category = p.Category.Name,
+                    Producer = p.Producer.Name,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl
+                }),
+                PageNumber = page,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+                SearchTerm = searchTerm
+            };
+
+            return View(vm);
         }
+
 
         public async Task<IActionResult> Details(Guid id) 
         {

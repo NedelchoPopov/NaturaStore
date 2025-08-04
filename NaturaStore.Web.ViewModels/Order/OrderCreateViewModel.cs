@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using NaturaStore.Data.Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NaturaStore.Data.Common.Enums;
 
 namespace NaturaStore.Web.ViewModels.Order
 {
